@@ -4,6 +4,7 @@ import herobg from "../../assets/images/herobg.png";
 const HeroSection: React.FC = () => {
   const imageRef = useRef<HTMLImageElement | null>(null);
   const [imgHeight, setImgHeight] = useState<number | null>(null);
+  console.log(imgHeight);
 
   useEffect(() => {
     if (imageRef.current) {

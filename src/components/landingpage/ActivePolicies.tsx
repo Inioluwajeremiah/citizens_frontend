@@ -425,10 +425,11 @@ const activePoliciesData = [
 ];
 
 const ActivePolicies = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  // const [data, setData] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  // const [itemsPerPage, setItemsPerPage] = useState(10);
   const [page, setPage] = useState(1);
+  console.log(page);
 
   const windowHeight = window.innerHeight;
   const scrollTop = document.documentElement.scrollTop;

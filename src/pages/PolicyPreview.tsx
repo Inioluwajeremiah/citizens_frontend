@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import ForwardArrow from "../assets/icons/forwardArrow";
+import React, { useState } from "react";
+import ForwardArrow from "../assets/icons/ForwardArrow";
 import playIcon from "../assets/icons/playicon.svg";
 import infoIcon from "../assets/icons/infoicon.svg";
 import Megaphoneicon from "../assets/icons/Megaphoneicon";
@@ -151,8 +151,9 @@ const viewsData = [
 const PolicyPreview = () => {
   const [isReversed, setIsReversed] = useState(false);
   const [startIndex, setStartIndex] = useState(4);
-  const [currentVoices, setCurrentVoices] = useState(viewsData.slice(0, 4));
-  const [currentVoices2, setCurrentVoices2] = useState(viewsData.slice(3, 6));
+  // const [currentVoices, setCurrentVoices] = useState(viewsData.slice(0, 4));
+  // const [currentVoices2, setCurrentVoices2] = useState(viewsData.slice(3, 6));
+  console.log(setStartIndex);
 
   /**
    * calculate the negative translate value in the scroll animation. This is done
