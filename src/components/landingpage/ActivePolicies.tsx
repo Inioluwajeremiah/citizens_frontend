@@ -457,10 +457,10 @@ const ActivePolicies = () => {
 
     isLoading: loadingPolicies,
   } = useGetPoliciesQuery({
-    page,
+    page: page,
     limit: 4,
     search: searchTerm,
-    category,
+    category: category,
   });
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
