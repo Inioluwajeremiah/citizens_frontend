@@ -9,4 +9,5 @@ export default defineConfig({
       "/uploads": "http://localhost:7000",
     },
   },
+  logLevel: "silent",
 });
