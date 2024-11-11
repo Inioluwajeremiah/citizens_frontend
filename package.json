@@ -6,7 +6,7 @@
   "proxy": "http://localhost:7000",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "NODE_NO_WARNINGS=1  tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
