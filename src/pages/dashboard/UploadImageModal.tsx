@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import cloudicon from "../../assets/icons/cloudicon.svg";
 import closeicon from "../../assets/icons/closeicon.svg";
 import { useUploadFileMutation } from "../../redux/apiSlice/uploadFileApi";
@@ -22,7 +22,7 @@ const UploadImageModal = ({
   const [uploadFile, { isLoading }] = useUploadFileMutation();
   const [showSucessModal, setShowSucessModal] = useState(false);
   const [showModal, setShowModal] = useState(true);
-  const [showParentModal, setShowParentModal] = useState(false);
+  // const [showParentModal, setShowParentModal] = useState(false);
 
   if (!showModal) {
     return null;
@@ -54,7 +54,7 @@ const UploadImageModal = ({
         setTimeout(() => {
           setShowSucessModal(false);
           setShowModal(false);
-          setShowParentModal(false);
+          // setShowParentModal(false);
           handleCloseAllModal();
         }, 2000);
 

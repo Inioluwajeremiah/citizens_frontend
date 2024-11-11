@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useState } from "react";
 
 interface ModalProps {
   children: ReactNode;
@@ -6,11 +6,7 @@ interface ModalProps {
   closeModal?: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({
-  children,
-  closeAllModal,
-  closeModal,
-}) => {
+const Modal: React.FC<ModalProps> = ({ children, closeAllModal }) => {
   const [showModal, setShowModal] = useState(true);
 
   const handleCloseModal = (e: React.MouseEvent<HTMLDivElement>) => {

@@ -10,4 +10,4 @@ export const endpoints = {
   blogUrl: "blog/",
 } as const;
 
-type Endpoints = typeof endpoints;
+// type Endpoints = typeof endpoints;

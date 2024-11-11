@@ -365,6 +365,9 @@ async function runEncryptionDecryption(): Promise<void> {
       false
     );
 
+    console.log(savedPublicKey);
+    console.log(savedPrivateKey);
+
     encryptedData = await encryptWithRSA(savedPublicKeyPEM, "hello");
 
     // Decrypt the message with the private key
@@ -386,9 +389,13 @@ async function runEncryptionDecryption(): Promise<void> {
         savedPrivateKeyPEM,
         false
       );
+      console.log(savedPublicKey);
+      console.log(savedPrivateKey);
 
       // Decrypt the message with the private key
       // await decryptWithRSA(savedPrivateKey, encryptedData);
     }
   }
 }
+
+runEncryptionDecryption();

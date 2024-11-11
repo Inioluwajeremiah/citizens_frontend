@@ -98,7 +98,7 @@ const PolicyPreview = () => {
   const { state } = useLocation();
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const [showSignInModal, setShowSignInModal] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   const [showFullPreview, setShowFullPreview] = useState(false);
   const [showSucessModal, setShowSucessModal] = useState(false);
   const [playButtonPressed, setPlayButtonPressed] = useState(false);
@@ -142,9 +142,9 @@ const PolicyPreview = () => {
     decryptData();
   }, [userInfo]);
 
-  const handleToggleModal = () => {
-    setShowModal(!showModal);
-  };
+  // const handleToggleModal = () => {
+  //   setShowModal(!showModal);
+  // };
 
   const handlePlayAudioButton = () => {
     setShowFullPreview(true);
@@ -207,7 +207,8 @@ const PolicyPreview = () => {
       document.body.style.overflow = "auto"; // Reset on component unmount
       document.removeEventListener("touchmove", handleTouchMove);
     };
-  }, [showModal]);
+  }, []);
+  // showModal
 
   useEffect(() => {
     const timeout = setTimeout(() => {
