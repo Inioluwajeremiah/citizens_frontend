@@ -1,8 +1,8 @@
 import chevronDownIcon from "../../assets/icons/ChevronDown.svg";
 import searchIcon from "../../assets/icons/searchicon.svg";
-import health from "../../assets/images/health.png";
-import economy from "../../assets/images/economy.png";
-import education from "../../assets/images/education.png";
+// import health from "../../assets/images/health.png";
+// import economy from "../../assets/images/economy.png";
+// import education from "../../assets/images/education.png";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetPoliciesQuery } from "../../redux/apiSlice/policyApiSlice";
@@ -24,413 +24,413 @@ const HorizontalDivider = () => {
   );
 };
 
-const activePoliciesData = [
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "",
-  },
-  {
-    category: "HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "EDUCATION",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "",
-  },
+// const activePoliciesData = [
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "",
+//   },
+//   {
+//     category: "HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "EDUCATION",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "/src/assets/images/economy.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "",
-  },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "/src/assets/images/economy.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "",
-  },
-  {
-    category: "HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "EDUCATION",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "",
-  },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "",
+//   },
+//   {
+//     category: "HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "EDUCATION",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "/src/assets/images/economy.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "",
-  },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "/src/assets/images/economy.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "",
-  },
-  {
-    category: "HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "EDUCATION",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "",
-  },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "",
+//   },
+//   {
+//     category: "HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "EDUCATION",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "/src/assets/images/economy.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "",
-  },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "/src/assets/images/economy.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "",
-  },
-  {
-    category: "HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "EDUCATION",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "",
-  },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "",
+//   },
+//   {
+//     category: "HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "EDUCATION",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "/src/assets/images/economy.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "",
-  },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "/src/assets/images/economy.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "",
-  },
-  {
-    category: "HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "EDUCATION",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "",
-  },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "",
+//   },
+//   {
+//     category: "HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "EDUCATION",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "/src/assets/images/economy.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "",
-  },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "/src/assets/images/economy.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "",
-  },
-  {
-    category: "HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "EDUCATION",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "",
-  },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "",
+//   },
+//   {
+//     category: "HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "EDUCATION",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "/src/assets/images/economy.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "",
-  },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "/src/assets/images/economy.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "",
-  },
-  {
-    category: "HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "EDUCATION",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "",
-  },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "",
+//   },
+//   {
+//     category: "HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "EDUCATION",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "/src/assets/images/economy.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "",
-  },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "/src/assets/images/economy.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "",
-  },
-  {
-    category: "HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "EDUCATION",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "",
-  },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "",
+//   },
+//   {
+//     category: "HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "EDUCATION",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "/src/assets/images/economy.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "",
-  },
-];
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "/src/assets/images/economy.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "",
+//   },
+// ];
 
 const ActivePolicies = () => {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("");
-  const [limit, setLimit] = useState(4);
+  // const [limit, setLimit] = useState(4);
   console.log(page);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -454,11 +454,11 @@ const ActivePolicies = () => {
   };
   const {
     data: policiesData,
-    refetch,
+
     isLoading: loadingPolicies,
   } = useGetPoliciesQuery({
     page,
-    limit,
+    limit: 4,
     search: searchTerm,
     category,
   });

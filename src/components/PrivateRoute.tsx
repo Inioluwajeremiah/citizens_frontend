@@ -8,7 +8,7 @@ import { UserDataProps } from "./interfaces/UserInterface";
 const PrivateRoute = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const [userData, setUserData] = useState<UserDataProps | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
 
   const decryptData = async () => {
     const decryptedText = await decryptWithRSA(
@@ -27,7 +27,7 @@ const PrivateRoute = () => {
       return userData?._id ? <Outlet /> : <Navigate to="/" replace />;
     } catch (error) {
       console.error("Failed to parse decrypted text:", error);
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -37,7 +37,7 @@ const PrivateRoute = () => {
     if (userInfo) {
       decryptData();
     } else {
-      setLoading(false);
+      // setLoading(false);
     }
   }, [userInfo]);
 

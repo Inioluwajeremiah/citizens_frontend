@@ -219,6 +219,9 @@ const PolicyPreview = () => {
     return () => clearTimeout(timeout);
   });
 
+  if (loadingViews) {
+    return <p>Loading</p>;
+  }
   return (
     <>
       {/* hero section */}

@@ -15,25 +15,22 @@ interface StatesProps {
   subdivision: null;
 }
 
-const EducationForm = ({
-  policyId,
-  usertData,
-  policyTitle,
-}: EducationFormProps) => {
+const EducationForm = ({ policyTitle }: EducationFormProps) => {
   const [states, setStates] = useState<StatesProps[]>([]);
   const [knowsPolicy, setKnowsPolicy] = useState("");
+  const [username, setUsername] = useState("");
   const [selectedPolicies, setSelectedPolicies] = useState<string[]>([]);
   const [effectiveness, setEffectiveness] = useState<number | null>(null);
   const [effectiveness2, setEffectiveness2] = useState<number>(5);
   const [recommendations, setRecommendations] = useState("");
-  const [formData, setFormData] = useState<any>({
-    userId: usertData._id,
-    policyId: policyId,
-    title: "",
-    country: "",
-    state: "",
-    surveyFields: {},
-  });
+  //   const [formData, setFormData] = useState<any>({
+  //     userId: usertData._id,
+  //     policyId: policyId,
+  //     title: "",
+  //     country: "",
+  //     state: "",
+  //     surveyFields: {},
+  //   });
   const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
   const handlePolicyChange = (policy: string) => {
     setSelectedPolicies((prevSelectedPolicies) =>
@@ -49,7 +46,11 @@ const EducationForm = ({
     setEffectiveness(Number(event.target.value));
   };
 
-  const handleFormInput = () => {};
+  //   const handleFormInput = () => {};
+  const handleSubmit = () => {
+    setSubmitButtonClicked(!submitButtonClicked);
+    setStates([]);
+  };
   return (
     <div>
       <p className="text-blackColor text-[32px] font-bold">{policyTitle}</p>
@@ -69,13 +70,13 @@ const EducationForm = ({
       <input
         type="text"
         name="username"
-        value={formData.name}
+        value={username}
         id="username"
         placeholder="Username"
         className={`mt-2 border w-full p-4 outline-none rounded-md focus:border-primaryColor text-sm ${
-          formData.name === "" && submitButtonClicked && "border-red-500"
+          username === "" && submitButtonClicked && "border-red-500"
         }`}
-        onChange={handleFormInput}
+        onChange={(e) => setUsername(e.target.value)}
       />
       {/* country and state */}
       <div className="flex flow-row items-center justify-between gap-x-4 mb-4">
@@ -197,7 +198,7 @@ const EducationForm = ({
               type="radio"
               value={value}
               checked={effectiveness === value}
-              onChange={() => setEffectiveness(value)}
+              onChange={() => setEffectiveness2(value)}
             />
             {value}
           </label>
@@ -238,8 +239,10 @@ const EducationForm = ({
         className={`mt-2 border w-full p-4 outline-none focus:border-primaryColor text-sm ${
           recommendations === "" && submitButtonClicked && "border-red-500"
         }`}
-        onChange={handleFormInput}
+        onChange={(e) => setRecommendations(e.target.value)}
       />
+
+      <button onClick={handleSubmit}></button>
     </div>
   );
 };

@@ -1,71 +1,68 @@
 import { useEffect, useRef, useState } from "react";
 import chevronDownIcon from "../../assets/icons/ChevronDown.svg";
 import searchIcon from "../../assets/icons/searchicon.svg";
-import health from "../../assets/images/health.png";
-import economy from "../../assets/images/economy.png";
-import education from "../../assets/images/education.png";
+// import health from "../../assets/images/health.png";
+// import economy from "../../assets/images/economy.png";
+// import education from "../../assets/images/education.png";
 import OptionsIcons from "../../assets/icons/OptionsIcons";
 import { Link } from "react-router-dom";
 import { decryptWithRSA } from "../../utils/subtlecrypto";
 import { RootState } from "../../redux/store";
 import { UserDataProps } from "../../components/interfaces/UserInterface";
 import { useSelector } from "react-redux";
-import {
-  useGetActivePoliciesQuery,
-  useGetPoliciesQuery,
-} from "../../redux/apiSlice/policyApiSlice";
+import { useGetPoliciesQuery } from "../../redux/apiSlice/policyApiSlice";
 
-const activePoliciesData = [
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "",
-  },
-  {
-    category: "HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "EDUCATION",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "",
-  },
+// const activePoliciesData = [
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "",
+//   },
+//   {
+//     category: "HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "EDUCATION",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "",
+//   },
 
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "/src/assets/images/economy.png",
-  },
-  {
-    category: "DIGITAL",
-    title: "Sexual reproductive health and right",
-    image: education,
-    imageUrl: "/src/assets/images/education.png",
-  },
-  {
-    category: "SEXUAL HEALTH",
-    title: "Sexual reproductive health and right",
-    image: health,
-    imageUrl: "/src/assets/images/health.png",
-  },
-  {
-    category: "ECONOMY",
-    title: "Sexual reproductive health and right",
-    image: economy,
-    imageUrl: "",
-  },
-];
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "/src/assets/images/economy.png",
+//   },
+//   {
+//     category: "DIGITAL",
+//     title: "Sexual reproductive health and right",
+//     image: education,
+//     imageUrl: "/src/assets/images/education.png",
+//   },
+//   {
+//     category: "SEXUAL HEALTH",
+//     title: "Sexual reproductive health and right",
+//     image: health,
+//     imageUrl: "/src/assets/images/health.png",
+//   },
+//   {
+//     category: "ECONOMY",
+//     title: "Sexual reproductive health and right",
+//     image: economy,
+//     imageUrl: "",
+//   },
+// ];
 
 const AdminPolicies = () => {
   const [showOPtionsModal, setShowOPtionsModal] = useState(false);
@@ -74,7 +71,7 @@ const AdminPolicies = () => {
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("");
-  const [limit, setLimit] = useState(10);
+  // const [limit, setLimit] = useState(10);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -97,12 +94,11 @@ const AdminPolicies = () => {
 
   const {
     data: policiesData,
-    refetch,
+
     isLoading: loadingPolicies,
-    error: policyError,
   } = useGetPoliciesQuery({
     page,
-    limit,
+    limit: 10,
     search: searchTerm,
     category,
   });
@@ -111,12 +107,12 @@ const AdminPolicies = () => {
     setShowOPtionsModal(!showOPtionsModal);
   };
 
-  const handleClickSelectCategory = () => {
-    const selectCategory = document.getElementById(
-      "select-category-dropdown"
-    ) as HTMLSelectElement;
-    if (selectCategory) selectCategory.click();
-  };
+  // const handleClickSelectCategory = () => {
+  //   const selectCategory = document.getElementById(
+  //     "select-category-dropdown"
+  //   ) as HTMLSelectElement;
+  //   if (selectCategory) selectCategory.click();
+  // };
 
   const decryptData = async () => {
     const decryptedText = await decryptWithRSA(
@@ -140,6 +136,7 @@ const AdminPolicies = () => {
 
   // Close dropdown when clicking outside
   useEffect(() => {
+    setPage(1);
     const handleClickOutside = (event: MouseEvent) => {
       if (
         dropdownRef.current &&
@@ -236,6 +233,7 @@ const AdminPolicies = () => {
         </div>
       </div>
 
+      {loadingPolicies && <p>laoding...</p>}
       {/* policies */}
       <div className=" grid grid-cols-2 gap-10 px-10 mt-10 pb-14">
         {policiesData?.map((item, index) => (

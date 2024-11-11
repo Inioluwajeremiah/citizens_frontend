@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import messageIcon from "../../assets/icons/messageicon.svg";
-import playIcon from "../../assets/icons/playicon.svg";
+// import playIcon from "../../assets/icons/playicon.svg";
 import TextReaderWithHighlight from "./TextReaderWithHighlight";
 
 interface Comment {
@@ -23,8 +23,8 @@ const PreviewModal: React.FC<PreviewModalProps> = ({
   playAudioButtonPressed,
   handleSetPlayAudioButton,
 }) => {
-  const [comment, setComment] = useState("");
-  const handlePostComment = () => {};
+  // const [comment, setComment] = useState("");
+  // const handlePostComment = () => {};
 
   return (
     <div className="relative w-full flex flex-col items-start justify-start  bg-white p-4 md:p-6 lg:px-10 lg:py-10 overflow-y-scroll">

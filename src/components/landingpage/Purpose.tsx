@@ -1,5 +1,5 @@
 import { useState } from "react";
-import forwardArrowIcon from "../../assets/icons/forwardArrow.svg";
+
 import showmoreicon from "../../assets/icons/showmoreicon.svg";
 import showlessicon from "../../assets/icons/showlessiocn.svg";
 
