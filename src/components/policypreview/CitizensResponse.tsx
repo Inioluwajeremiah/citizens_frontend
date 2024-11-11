@@ -119,10 +119,11 @@ const CitizensResponse: React.FC<ChartsProps> = ({ data }) => {
               paddingAngle={5}
               dataKey="value"
             >
-              {data.map((entry, index) => (
+              {data.map((_, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
+                  // entry={entry}
                 />
               ))}
             </Pie>
@@ -138,7 +139,7 @@ const CitizensResponse: React.FC<ChartsProps> = ({ data }) => {
               paddingAngle={5}
               dataKey="value"
             >
-              {data.map((entry, index) => (
+              {data.map((_, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={COLORS[index % COLORS.length]}
