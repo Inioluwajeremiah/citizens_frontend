@@ -1,242 +1,224 @@
-import React, { useState } from "react";
 import ForwardArrow from "../assets/icons/ForwardArrow";
 import playIcon from "../assets/icons/playicon.svg";
 import infoIcon from "../assets/icons/infoicon.svg";
 import Megaphoneicon from "../assets/icons/Megaphoneicon";
-import messageIcon from "../assets/icons/messageicon.svg";
+import CitizensResponse from "../components/policypreview/CitizensResponse";
+import CitizenVoices from "../components/policypreview/CitizenVoices";
+import CitizenReport from "../components/policypreview/CitizenReport";
+import { useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Modal from "../components/Modal";
+import Signin from "../components/auth/Signin";
+import Signup from "../components/auth/Signup";
+import SuccessAlert from "../components/SuccessAlert";
+import PreviewModal from "../components/policypreview/PreviewModal";
+import { RootState } from "../redux/store";
+import { UserDataProps } from "../components/interfaces/UserInterface";
+import { decryptWithRSA } from "../utils/subtlecrypto";
+import { useUpdatePolicyViewsMutation } from "../redux/apiSlice/policyApiSlice";
 
-// const img_url = "/src/assets/images/avatar.png";
-const viewsData = [
+const content =
+  "Sexual reproductive health rights (SRHR) are fundamental human rights that encompass a broad spectrum of issues related to sexuality, reproduction, and overall well-being. Recognized internationally, these rights emphasize the importance of providing individuals with access to comprehensive healthcare, education, and information, enabling them to make informed decisions about their sexual and reproductive lives. While significant progress has been made over the years, there remain numerous challenges and barriers to ensuring universal access to SRHR for all individuals around the world. This article delves into the importance of SRHR, its impact on individual lives and societies, the barriers faced, and the way forward to promote a more equitable and inclusive future. 1. Understanding Sexual Reproductive Health Rights At its core, SRHR embodies the notion that all individuals have the right to maintain their sexual health and well-being without discrimination or coercion. This includes access to essential services such as family planning, contraceptive options, maternal healthcare, prevention and treatment of sexually transmitted infections (STIs), and safe abortion services, where legal. Additionally, SRHR advocates for comprehensive sexual education, free from stigma and misinformation, to empower individuals to make responsible and informed choices regarding their bodies and reproductive choices. 2. Empowering Individuals through Education Education plays a crucial role in promoting SRHR. Comprehensive sexual education equips individuals with the knowledge and skills to understand their bodies, foster healthy relationships, prevent unwanted pregnancies and STIs, and make informed decisions about their sexual lives. However, in many parts of the world, access to comprehensive sexual education remains limited due to cultural, religious, or political reasons. It is imperative that policymakers and educational institutions recognize the significance of comprehensive sexual education in fostering responsible behavior, reducing teenage pregnancies, and preventing the spread of STIs.";
+
+const comments = [
   {
-    username: "anonymous1",
+    title: "Ralph Edwards",
+    description:
+      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+    date: "Aug 19, 2021",
     imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
   },
   {
-    username: "anonymous2",
+    title: "Ralph Edwards",
+    description:
+      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+    date: "Aug 19, 2021",
     imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
   },
   {
-    username: "anonymous3",
+    title: "Ralph Edwards",
+    description:
+      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+    date: "Aug 19, 2021",
     imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
   },
   {
-    username: "anonymous4",
+    title: "Ralph Edwards",
+    description:
+      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+    date: "Aug 19, 2021",
     imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
   },
   {
-    username: "anonymous5",
+    title: "Ralph Edwards",
+    description:
+      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+    date: "Aug 19, 2021",
     imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
   },
   {
-    username: "anonymous6",
+    title: "Ralph Edwards",
+    description:
+      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+    date: "Aug 19, 2021",
     imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
   },
   {
-    username: "anonymous7",
+    title: "Ralph Edwards",
+    description:
+      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+    date: "Aug 19, 2021",
     imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
   },
   {
-    username: "anonymous8",
+    title: "Ralph Edwards",
+    description:
+      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+    date: "Aug 19, 2021",
     imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
   },
   {
-    username: "anonymous9",
+    title: "Ralph Edwards",
+    description:
+      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+    date: "Aug 19, 2021",
     imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
-  },
-  {
-    username: "anonymous10",
-    imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
-  },
-  {
-    username: "anonymous11",
-    imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
-  },
-  {
-    username: "anonymous12",
-    imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
-  },
-  {
-    username: "anonymous13",
-    imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
-  },
-  {
-    username: "anonymous14",
-    imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
-  },
-  {
-    username: "anonymous15",
-    imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
-  },
-  {
-    username: "anonymous16",
-    imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
-  },
-  {
-    username: "anonymous17",
-    imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
-  },
-  {
-    username: "anonymous18",
-    imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
-  },
-  {
-    username: "anonymous19",
-    imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
-  },
-  {
-    username: "anonymous20",
-    imageUrl: "/src/assets/images/avatar.png",
-    policyTitle: "At aliquam enim in cras arcu",
-    comment:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labo",
   },
 ];
+
 const PolicyPreview = () => {
-  const [isReversed, setIsReversed] = useState(false);
-  const [startIndex, setStartIndex] = useState(4);
-  // const [currentVoices, setCurrentVoices] = useState(viewsData.slice(0, 4));
-  // const [currentVoices2, setCurrentVoices2] = useState(viewsData.slice(3, 6));
-  console.log(setStartIndex);
+  const data = [
+    { name: "Group A", value: 400 },
+    { name: "Group B", value: 300 },
+    { name: "Group C", value: 300 },
+    { name: "Group D", value: 200 },
+  ];
 
-  /**
-   * calculate the negative translate value in the scroll animation. This is done
-   * to avoid uneccessary white space if value given is too much or incomplete animated
-   *  items in the animation if the value given is too small.
-   * 1. first divide the item size by the window width to get the no of items the screen
-   * can contain
-   * 2. calculate the no of overflowing items and multiply by the item width to get the actual
-   * negative translate value. Also add the margin value * no of overflowing item to get the accurate
-   * value
-   *
-   */
-  const windowWidth = window.innerWidth;
-  // get no if items for large screen
-  const noOfItemsWindowScreenCanContain = Math.round(windowWidth / 300);
+  const { state } = useLocation();
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const [showSignInModal, setShowSignInModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showFullPreview, setShowFullPreview] = useState(false);
+  const [showSucessModal, setShowSucessModal] = useState(false);
+  const [playButtonPressed, setPlayButtonPressed] = useState(false);
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const [userData, setUserData] = useState<UserDataProps>({});
 
-  const noOfOVerflowingItems =
-    viewsData.length - noOfItemsWindowScreenCanContain;
-  // const overflowingMarginSize = noOfOVerflowingItems * 40;
-  const overflowingMarginSize = viewsData.length * 40;
-  const overflowingWidth = noOfOVerflowingItems * 300;
-  const totalOverflowingWidth = overflowingMarginSize + overflowingWidth;
+  const [updatePolicyViews, { isLoading: loadingViews }] =
+    useUpdatePolicyViewsMutation();
 
-  const toggleScrollDirection = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.detail === 2) {
-      // Check if it's a double click
-      setIsReversed((prev) => !prev);
+  const policyDescription = state?.description.replace(/<[^>]+>/g, "");
+  const decryptData = async () => {
+    const decryptedText = await decryptWithRSA(
+      import.meta.env.VITE_PRIVATE_KEY,
+      userInfo
+    );
+    console.log("decryptedText ===> ", decryptedText);
+    try {
+      const parsedData =
+        typeof decryptedText === "object"
+          ? decryptedText
+          : JSON.parse(decryptedText || "");
+      setUserData(parsedData);
+    } catch (error) {
+      console.error("Failed to parse decrypted text:", error);
     }
   };
 
-  const pauseAnimation = () => {
-    let animationDiv = document.getElementById("animation-div");
-    if (animationDiv) {
-      animationDiv.style.animationPlayState = "paused";
-    }
-    let animationDiv2 = document.getElementById("animation-div2");
-    if (animationDiv2) {
-      animationDiv2.style.animationPlayState = "paused";
-    }
+  // update policy views
+
+  useEffect(() => {
+    const handleUpdatePolicyView = async () => {
+      console.log("policy id ==> ", state._id);
+
+      const res = await updatePolicyViews({ policyId: state._id });
+      console.log("updatePolicyView res ===> ", res);
+    };
+    handleUpdatePolicyView();
+  }, [state]);
+
+  useEffect(() => {
+    decryptData();
+  }, [userInfo]);
+
+  const handleToggleModal = () => {
+    setShowModal(!showModal);
   };
 
-  const playAnimation = () => {
-    let animationDiv = document.getElementById("animation-div");
-    if (animationDiv) {
-      animationDiv.style.animationPlayState = "running";
-    }
-    let animationDiv2 = document.getElementById("animation-div2");
-    if (animationDiv2) {
-      animationDiv2.style.animationPlayState = "running";
-    }
+  const handlePlayAudioButton = () => {
+    setShowFullPreview(true);
+    setPlayButtonPressed(true);
   };
 
-  console.log("start index ==> ", startIndex);
+  const handleSetPlayAudioButton = () => {
+    setPlayButtonPressed(false);
+  };
+  const handleToggleSigninModal = () => {
+    setShowSignUpModal(false);
+    setShowFullPreview(false);
+    setShowSignInModal(!showSignInModal);
+  };
 
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     // Reset `startIndex` if it exceeds the length of `viewsData`
-  //     if (startIndex >= viewsData.length - 1) {
-  //       setStartIndex(0);
-  //       setCurrentVoices(viewsData.slice(0, 4));
-  //     } else {
-  //       setCurrentVoices(viewsData.slice(startIndex, startIndex + 4));
-  //       setStartIndex(startIndex + 4);
-  //     }
-  //   }, 10000);
+  const handleToggleSignupModal = () => {
+    setShowSignInModal(false);
+    setShowFullPreview(false);
+    setShowSignUpModal(!showSignUpModal);
+  };
 
-  //   // Clear timeout on cleanup to avoid stacking
-  //   return () => clearTimeout(timeoutId);
-  // }, [startIndex, viewsData]);
+  const handleToggleFullPreviewModal = () => {
+    setShowSignInModal(false);
+    setShowSignUpModal(false);
+    setShowFullPreview(!showFullPreview);
+  };
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     if (startIndex - viewsData.length >= 1) {
-  //       setCurrentVoices(viewsData.slice(0, 4));
-  //       // setCurrentVoices2(viewsData.slice(3, 6));
-  //       setStartIndex(4);
-  //       return;
-  //     }
-  //     setCurrentVoices(viewsData.slice(startIndex, startIndex + 4));
-  //     // setCurrentVoices2(viewsData.slice(startIndex + 3, startIndex + 6));
-  //     setStartIndex(startIndex + 4);
-  //   }, 10000);
-  // }, [startIndex]);
+  const handleSuccessModal = () => {
+    setShowSucessModal(!showSucessModal);
+  };
+  const handleTouchMove = (e: any) => {
+    e.preventDefault();
+  };
+  const handleCloseAllModal = () => {
+    setShowSignUpModal(false);
+    setShowFullPreview(false);
+    setShowSignInModal(false);
+    handleSetPlayAudioButton();
+  };
+
+  useEffect(() => {
+    if (
+      showFullPreview ||
+      showSignInModal ||
+      showSignUpModal ||
+      showSucessModal
+    ) {
+      document.body.style.overflow = "hidden";
+      // Additional touch event handling for mobile
+
+      // Add event listeners to prevent touch move on mobile
+      document.addEventListener("touchmove", handleTouchMove, {
+        passive: false,
+      });
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto"; // Reset on component unmount
+      document.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [showModal]);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      // setShowSucessModal(true);
+      // if (showSucessModal) {
+      //   handleCloseAllModal();
+      // }
+    }, 5000);
+    return () => clearTimeout(timeout);
+  });
+
   return (
     <>
       {/* hero section */}
@@ -247,13 +229,17 @@ const PolicyPreview = () => {
         }}
       >
         <div className="absolute h-[467px]  top-0 inset-0 bg-gradient-to-b from-[rgba(11,29,43,0)] to-[rgba(11,29,43,1)] z-10">
-          <div className=" w-[80%] lg:w-full container mx-auto h-full  flex flex-col justify-center ">
+          <div className=" w-[80%] lg:w-full container mx-auto h-full  flex flex-col justify-center  ">
             <p className="text-[40px] text-white leading-[70px] w-[50%] md:w-[40%] lg:w-[25%] font-medium tracking-[-1.6px]">
-              Sexual Reproductive health and right
+              {/* {     Sexual Reproductive health and right} */}
+              {state?.title}
             </p>
             <div className="mt-10 flex flex-row items-center justify-between">
               {/* play audio button  */}
-              <button className="flex flow-row items-center gap-x-2">
+              <button
+                className="flex flow-row items-center gap-x-2"
+                onClick={handlePlayAudioButton}
+              >
                 <img
                   src={playIcon}
                   alt="citizensrep play converted policy text to audio  button"
@@ -263,15 +249,31 @@ const PolicyPreview = () => {
               </button>
 
               {/* add your voice button */}
-              <button className="flex flow-row items-center gap-x-2 bg-primaryColor px-8 py-4">
-                <Megaphoneicon color="#fff" />
-                {/* <img
-                  src={megaphoneIcon}
-                  alt="citizensrep add your voice forward arrow "
-                /> */}
-                <p className="text-white"> Add your voice</p>
-                <ForwardArrow color="#fff" />
-              </button>
+              {userInfo ? (
+                <Link
+                  to="/add-your-voice"
+                  state={{ policyData: state, userData: userData }}
+                  className="flex flow-row items-center gap-x-2 bg-primaryColor px-8 py-4"
+                >
+                  <Megaphoneicon color="#fff" />
+
+                  <p className="text-white"> Add your voice</p>
+                  <ForwardArrow color="#fff" />
+                </Link>
+              ) : (
+                <button
+                  onClick={handleToggleSigninModal}
+                  className="flex flow-row items-center gap-x-2 bg-primaryColor px-8 py-4"
+                >
+                  <Megaphoneicon color="#fff" />
+                  {/* <img
+                src={megaphoneIcon}
+                alt="citizensrep add your voice forward arrow "
+              /> */}
+                  <p className="text-white"> Add your voice</p>
+                  <ForwardArrow color="#fff" />
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -284,15 +286,21 @@ const PolicyPreview = () => {
             Introduction
           </p>
           <p className="text-center text-blackColor text-base leading-[27px] mt-6">
-            Championing comprehensive well-being and individual autonomy, the
+            {/* { Championing comprehensive well-being and individual autonomy, the
             government's progressive policy on sexual reproductive health and
             rights endeavors to ensure equitable access to quality healthcare,
             education, and services, fostering informed decision-making, gender
             equality, and reproductive freedom for individuals across all
-            backgrounds and circumstances
+            backgrounds and circumstances} */}
+            {policyDescription?.length > 200
+              ? policyDescription.slice(0, 200) + "..."
+              : policyDescription}
           </p>
 
-          <button className="flex flow-row items-center  mx-auto mt-6">
+          <button
+            className="flex flow-row items-center  mx-auto mt-6"
+            onClick={handleToggleFullPreviewModal}
+          >
             <p className="text-primaryColor font-semibold text-sm lg:text-lg">
               Learn More
             </p>
@@ -303,154 +311,8 @@ const PolicyPreview = () => {
 
       {/* citizens rep */}
       <section className="bg-[#FAFAFA] py-20 w-full">
-        <p className="container w-[80%] lg:w-full mx-auto text-2xl font-semibold tracking-[-1.68px] text-blackColor">
-          Voices
-        </p>
-        {/* sliding voices or policy comments */}
-        <div className="w-full flex flex-row items-center mt-10 overflow-hidden">
-          <div
-            className="flex w-full"
-            onMouseEnter={() => pauseAnimation()}
-            onMouseLeave={() => playAnimation()}
-          >
-            {/* ist slide */}
-            <div
-              style={
-                {
-                  "--scrollWidth": `${totalOverflowingWidth + 100}px`,
-                } as React.CSSProperties
-              }
-              className={`w-full flex flex-row flex-shrink-0 ${
-                isReversed ? "animate-scroll-reverse" : "animate-scroll"
-              }  cursor-pointer  `}
-              // className={`w-full flex flex-row space-x-4 cursor-pointer border py-20 animate-scroll flex-shrink-0 `}
-              id="animation-div"
-              onClick={toggleScrollDirection}
-            >
-              {viewsData.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex flex-shrink-0 flex-row cursor-pointer items-start h-20 md:h-24 w-[250px] lg:w-[300px] ml-10 border-l-[3px] md:border-l-[6px] border-l-[#2A9D8F] px-2"
-                  // className="flex flex-shrink-0 flex-row cursor-pointer items-start h-20 md:h-24 w-[70%] lg:w-[22%] ml-10 border-l-[3px] md:border-l-[6px] border-l-[#2A9D8F] px-2"
-                  onClick={() =>
-                    alert(`username: ${item.username} \nindex:${index + 1}`)
-                  }
-                >
-                  <div className="relative w-[40%] rounded-full">
-                    <img
-                      src={item.imageUrl}
-                      alt="CitizensRep user image"
-                      className="h-[36px] w-[36px] md:h-[36px] md:w-[36px] lg:h-[42px] lg:w-[42px]"
-                    />
-                    <img
-                      src={messageIcon}
-                      alt=""
-                      className="absolute bottom-1 right-0  h-4 w-4"
-                    />
-                  </div>
-                  <div className="ml-2">
-                    <p className="text-xs md:text-sm text-[#333]">
-                      {item.username}
-                    </p>
-                    <p className="text-xs md:text-sm font-semibold">
-                      {item.policyTitle}
-                    </p>
-                    <p className="text-[10px] md:text-xs text-[#4F4F4F] ">
-                      {item.comment.length > 97
-                        ? item.comment.slice(0, 97) + "..."
-                        : item.comment}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* test slide */}
-            {/* <div
-              // style={
-              //   {
-              //     "--scrollWidth": `${totalOverflowingWidth * 2}px`,
-              //   } as React.CSSProperties
-              // }
-              className={`w-full flex flex-row flex-shrink-0 ${
-                isReversed ? "animate-scroll-reverse" : "animate-scroll"
-              }  cursor-pointer border py-20  `}
-              // className={`w-full flex flex-row space-x-4 cursor-pointer border py-20 animate-scroll flex-shrink-0 `}
-              id="animation-div2"
-              // onMouseEnter={() => pauseAnimation()}
-              // onMouseLeave={() => playAnimation()}
-              onClick={toggleScrollDirection}
-            >
-              {currentVoices.map((item, index) => (
-                <div
-                  key={index}
-                  // className="flex flex-shrink-0 flex-row cursor-pointer items-start h-20 md:h-24 w-[250px] lg:w-[300px] ml-10 border-l-[3px] md:border-l-[6px] border-l-[#2A9D8F] px-2"
-                  className="flex flex-shrink-0 flex-row cursor-pointer items-start h-20 md:h-24 w-[70%] lg:w-[22%] ml-10 border-l-[3px] md:border-l-[6px] border-l-[#2A9D8F] px-2"
-                  onClick={() =>
-                    alert(`username: ${item.username} \nindex:${index + 1}`)
-                  }
-                >
-                  <img
-                    src={item.imageUrl}
-                    alt="CitizensRep user image"
-                    className="h-[36px] w-[36px] md:h-[36px] md:w-[36px] lg:h-[42px] lg:w-[42px]"
-                  />
-                  <div className="ml-2">
-                    <p className="text-xs md:text-sm text-[#333]">
-                      {item.username}
-                    </p>
-                    <p className="text-xs md:text-sm font-semibold">
-                      {item.policyTitle}
-                    </p>
-                    <p className="text-[10px] md:text-xs text-[#4F4F4F] ">
-                      {item.comment.length > 97
-                        ? item.comment.slice(0, 97) + "..."
-                        : item.comment}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div> */}
-
-            {/* test slide */}
-            {/* <div
-              className={`w-full bg-blue-700 flex flex-row flex-shrink-0 ${
-                isReversed ? "animate-scroll-reverse" : "animate-scroll"
-              } cursor-pointer border py-20  `}
-              id="animation-div2"
-              onClick={toggleScrollDirection}
-            >
-              {viewsData.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex  flex-shrink-0 flex-row cursor-pointer items-start h-20 md:h-24 w-[70%] lg:w-[30%] ml-10 border-l-[3px] md:border-l-[6px] border-l-[#2A9D8F] px-2"
-                  onClick={() =>
-                    alert(`username: ${item.username} \nindex:${index + 1}`)
-                  }
-                >
-                  <img
-                    src={item.imageUrl}
-                    alt="CitizensRep user image"
-                    className="h-[36px] w-[36px] md:h-[36px] md:w-[36px] lg:h-[42px] lg:w-[42px]"
-                  />
-                  <div className="ml-2">
-                    <p className="text-xs md:text-sm text-[#333]">
-                      {item.username}
-                    </p>
-                    <p className="text-xs md:text-sm font-semibold">
-                      {item.policyTitle}
-                    </p>
-                    <p className="text-[10px] md:text-xs text-[#4F4F4F] ">
-                      {item.comment.length > 97
-                        ? item.comment.slice(0, 97) + "..."
-                        : item.comment}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div> */}
-          </div>
-        </div>
+        <CitizensResponse data={data} />
+        <CitizenVoices />
       </section>
 
       {/* banner */}
@@ -470,6 +332,44 @@ const PolicyPreview = () => {
           </div>
         </div>
       </div>
+
+      {/* citizens report */}
+      <CitizenReport />
+
+      {showSignInModal && (
+        <Modal closeAllModal={handleCloseAllModal}>
+          <Signin
+            onPressSignup={handleToggleSignupModal}
+            closeSigninModal={handleToggleSigninModal}
+            setShowSucessModal={handleSuccessModal}
+          />
+        </Modal>
+      )}
+      {showSignUpModal && (
+        <Modal closeAllModal={handleCloseAllModal}>
+          <Signup
+            onPressLogin={handleToggleSigninModal}
+            closeSignupModal={handleToggleSignupModal}
+            setShowSucessModal={handleSuccessModal}
+          />
+        </Modal>
+      )}
+      {showFullPreview && (
+        <Modal closeAllModal={handleCloseAllModal}>
+          <PreviewModal
+            content={content}
+            comments={comments}
+            playAudioButtonPressed={playButtonPressed}
+            handleSetPlayAudioButton={handleSetPlayAudioButton}
+          />
+        </Modal>
+      )}
+
+      {showSucessModal && (
+        <Modal closeAllModal={handleCloseAllModal}>
+          <SuccessAlert message="Log in successful!" />
+        </Modal>
+      )}
     </>
   );
 };

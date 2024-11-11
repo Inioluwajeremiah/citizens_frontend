@@ -26,8 +26,10 @@ const Footer = () => {
         {/* <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 py-20   gap-y-10 lg:gap-y-0 lg:gap-x-4 "> */}
         {/* logo */}
         <Link to={"/"} className="flex flex-row items-center ">
-          <img src={logo} alt="CitizensRep logo" />
-          <p className="text-white ml-2 font-semibold text-base">CitizensRep</p>
+          <img src={logo} alt="YouthTrackIt logo" />
+          <p className="text-white ml-2 font-semibold text-base">
+            YouthTrackIt
+          </p>
         </Link>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">

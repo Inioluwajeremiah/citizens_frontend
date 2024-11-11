@@ -62,7 +62,7 @@ const Header = () => {
   }, [toggleTheme]);
 
   return (
-    <header className="dark:bg-[#222] z-50 dark:text-white bg-white shadow-md h-20 w-full fixed top-0 left-0">
+    <header className="dark:bg-[#222] z-50 dark:text-white bg-white/90 shadow-md h-20 w-full fixed top-0 left-0">
       <div className="container mx-auto w-[80%] lg:w-full h-full flex flex-row items-center justify-between">
         {/* logo */}
         <div className={`flex flex-row items-center `}>
@@ -71,9 +71,9 @@ const Header = () => {
             onClick={() => handleLink("hero")}
             className="flex flex-row items-center"
           >
-            <img src={logo} alt="Citizens logo" />
+            <img src={logo} alt="Youth Track It logo" />
             <p className="text-base font-semibold text-blackColor ml-2 ">
-              CitizensRep
+              YouthTrackIt
             </p>
           </NavLink>
           {/* toggle theme */}

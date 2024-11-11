@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script>
+      async function encryptWithRSA(publicKey, text) {
+        // Convert the text to an ArrayBuffer
+        const enc = new TextEncoder();
+        const encodedText = enc.encode(text);
+
+        try {
+          // Encrypt the text using the public key
+          const encryptedData = await window.crypto.subtle.encrypt(
+            {
+              name: "RSA-OAEP", // Algorithm
+            },
+            publicKey, // Use the public key (CryptoKey) here
+            encodedText // The data to be encrypted
+          );
+
+          // Optionally, you can convert the encrypted data to a readable format (e.g., base64)
+          const encryptedArray = new Uint8Array(encryptedData);
+          const encryptedBase64 = btoa(String.fromCharCode(...encryptedArray));
+
+          console.log("Encrypted Text:", encryptedBase64);
+        } catch (err) {
+          console.error("Encryption failed", err);
+        }
+      }
+
+      async function generateRSAKeyPair() {
+        const keyPair = await window.crypto.subtle.generateKey(
+          {
+            name: "RSA-OAEP",
+            modulusLength: 2048, // Key size (2048 bits)
+            publicExponent: new Uint8Array([1, 0, 1]), // Public exponent (typically 0x010001)
+            hash: "SHA-256", // Hash algorithm used for OAEP padding
+          },
+          true, // Whether the keys can be exported
+          ["encrypt", "decrypt"] // Key usage
+        );
+        return keyPair;
+      }
+
+      //   const publickey = generateRSAKeyPair();
+      const encryptedData = generateRSAKeyPair().then((keyPair) => {
+        // Now you have keyPair.publicKey and keyPair.privateKey for encryption/decryption
+
+        console.log("public key ==> ", keyPair.publicKey);
+
+        encryptWithRSA(keyPair.publicKey, "hello");
+
+        //   const enc = new TextEncoder();
+        //   const encodedText = enc.encode("hello");
+        //   const token = window.crypto.subtle.encrypt(
+        //     {
+        //       name: "RSA-OAEP",
+        //     },
+        //     keyPair.publicKey,
+        //     encodedText
+        //   );
+      });
+
+      async function decryptWithRSA(privateKey, encryptedData) {
+        try {
+          const decryptedData = await window.crypto.subtle.decrypt(
+            {
+              name: "RSA-OAEP", // Algorithm
+            },
+            privateKey, // Use the private key (CryptoKey) here
+            encryptedData // The encrypted data to be decrypted
+          );
+
+          const dec = new TextDecoder();
+          const decryptedText = dec.decode(decryptedData);
+          console.log("Decrypted Text:", decryptedText);
+        } catch (err) {
+          console.error("Decryption failed", err);
+        }
+      }
+      // Example usage:
+      async function runEncryptionDecryption() {
+        const { publicKey, privateKey } = await generateRSAKeyPair();
+
+        // Encrypt the message with the public key
+        const encryptedData = await encryptWithRSA(publicKey, "hello");
+
+        // Decrypt the message with the private key
+        await decryptWithRSA(privateKey, encryptedData);
+      }
+
+      runEncryptionDecryption();
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -6,6 +6,16 @@ import AboutUs from "./pages/AboutUs";
 import Blog from "./pages/Blog";
 import AddYourVoice from "./pages/AddYourVoice";
 import PolicyPreview from "./pages/PolicyPreview";
+import PrivateRoute from "./components/PrivateRoute";
+import AdminRoute from "./components/dashboard/AdminRoute";
+import AdminBlogs from "./pages/dashboard/AdminBlogs";
+import AdminPolicies from "./pages/dashboard/AdminPolicies";
+import Admin from "./pages/dashboard/Admin";
+import NotFound from "./pages/NotFound";
+import AddNewPolicy from "./pages/dashboard/AddNewPolicy";
+import PolicyRoute from "./components/dashboard/PolicyRoute";
+import Home from "./pages/dashboard/Home";
+import AddNewBlog from "./pages/dashboard/AddNewBlog";
 
 export const router = createBrowserRouter([
   {
@@ -25,10 +35,7 @@ export const router = createBrowserRouter([
         path: "/policies/:id",
         element: <PolicyPreview />,
       },
-      {
-        path: "/add-your-voice",
-        element: <AddYourVoice />,
-      },
+
       {
         path: "/about",
         element: <AboutUs />,
@@ -37,6 +44,66 @@ export const router = createBrowserRouter([
         path: "/blog",
         element: <Blog />,
       },
+      {
+        path: "",
+        element: <PrivateRoute />,
+        children: [
+          {
+            path: "/add-your-voice",
+            element: <AddYourVoice />,
+          },
+        ],
+      },
     ],
+  },
+  {
+    path: "",
+    element: <AdminRoute />,
+    children: [
+      {
+        path: "/admin",
+        element: <Admin />,
+        children: [
+          {
+            path: "home",
+            element: <Home />,
+          },
+          {
+            path: "policies",
+            element: <PolicyRoute />,
+            children: [
+              {
+                path: "",
+                index: true,
+                element: <AdminPolicies />,
+              },
+              {
+                path: "add-new-policy",
+                element: <AddNewPolicy />,
+              },
+            ],
+          },
+          {
+            path: "blogs",
+            element: <AdminRoute />,
+            children: [
+              {
+                path: "",
+                index: true,
+                element: <AdminBlogs />,
+              },
+              {
+                path: "add-new-blog",
+                element: <AddNewBlog />,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);

@@ -1,63 +1,9 @@
 import chevronDownIcon from "../assets/icons/ChevronDown.svg";
 import searchIcon from "../assets/icons/searchicon.svg";
-import health from "../assets/images/health.png";
-import economy from "../assets/images/economy.png";
-import education from "../assets/images/education.png";
 import { Link } from "react-router-dom";
+import { activePoliciesData } from "../utils/data";
 
 const Policies = () => {
-  const activePoliciesData = [
-    {
-      category: "SEXUAL HEALTH",
-      title: "Sexual reproductive health and right",
-      image: health,
-      imageUrl: "",
-    },
-    {
-      category: "HEALTH",
-      title: "Sexual reproductive health and right",
-      image: health,
-      imageUrl: "/src/assets/images/health.png",
-    },
-    {
-      category: "EDUCATION",
-      title: "Sexual reproductive health and right",
-      image: education,
-      imageUrl: "/src/assets/images/education.png",
-    },
-    {
-      category: "DIGITAL",
-      title: "Sexual reproductive health and right",
-      image: education,
-      imageUrl: "",
-    },
-
-    {
-      category: "ECONOMY",
-      title: "Sexual reproductive health and right",
-      image: economy,
-      imageUrl: "/src/assets/images/economy.png",
-    },
-    {
-      category: "DIGITAL",
-      title: "Sexual reproductive health and right",
-      image: education,
-      imageUrl: "/src/assets/images/education.png",
-    },
-    {
-      category: "SEXUAL HEALTH",
-      title: "Sexual reproductive health and right",
-      image: health,
-      imageUrl: "/src/assets/images/health.png",
-    },
-    {
-      category: "ECONOMY",
-      title: "Sexual reproductive health and right",
-      image: economy,
-      imageUrl: "",
-    },
-  ];
-
   return (
     <section className="w-full py-20 mt-20">
       <div className="container mx-auto w-[80%] lg:w-full  ">
@@ -100,6 +46,7 @@ const Policies = () => {
             return (
               <Link
                 to={"policies/id"}
+                state={item}
                 key={index}
                 className={`relative h-[316px] ${
                   !item.imageUrl && "bg-primaryColorAccent"

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RSA Encrypt/Decrypt Object</title>
+  </head>
+  <body>
+    <script>
+      // Generate RSA Key Pair (public and private)
+      async function generateRSAKeyPair() {
+        const keyPair = await window.crypto.subtle.generateKey(
+          {
+            name: "RSA-OAEP",
+            modulusLength: 2048,
+            publicExponent: new Uint8Array([1, 0, 1]), // Common exponent for RSA
+            hash: "SHA-256", // Hash algorithm used
+          },
+          true, // Can be exported
+          ["encrypt", "decrypt"] // Public key used for encryption, private key for decryption
+        );
+        return keyPair;
+      }
+
+      // Export the RSA Key Pair to PEM format
+      async function exportRSAKeyToPEM(key, isPublicKey = true) {
+        const exportedKey = await window.crypto.subtle.exportKey(
+          isPublicKey ? "spki" : "pkcs8", // Export format (SPKI for public, PKCS8 for private)
+          key
+        );
+        const exportedKeyArray = new Uint8Array(exportedKey);
+        const keyString = arrayBufferToBase64(exportedKeyArray);
+        return keyString;
+      }
+
+      // Convert ArrayBuffer to Base64
+      function arrayBufferToBase64(buffer) {
+        let binary = "";
+        const bytes = new Uint8Array(buffer);
+        const len = bytes.byteLength;
+        for (let i = 0; i < len; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary); // Convert to Base64 string
+      }
+
+      // Import the RSA Key from PEM format
+      async function importRSAKeyFromPEM(pemKey, isPublicKey = true) {
+        const binaryDerString = window.atob(pemKey);
+        const binaryDer = new Uint8Array(binaryDerString.length);
+        for (let i = 0; i < binaryDerString.length; i++) {
+          binaryDer[i] = binaryDerString.charCodeAt(i);
+        }
+
+        const keyFormat = isPublicKey ? "spki" : "pkcs8";
+        const importedKey = await window.crypto.subtle.importKey(
+          keyFormat,
+          binaryDer.buffer,
+          {
+            name: "RSA-OAEP",
+            hash: "SHA-256",
+          },
+          true, // Key can be used for encryption/decryption
+          isPublicKey ? ["encrypt"] : ["decrypt"]
+        );
+        return importedKey;
+      }
+
+      // Encrypt object using the RSA public key
+      async function encryptObjectWithRSA(publicKey, object) {
+        const serializedObject = JSON.stringify(object); // Serialize object to JSON string
+        const enc = new TextEncoder();
+        const encodedText = enc.encode(serializedObject);
+
+        try {
+          const encryptedData = await window.crypto.subtle.encrypt(
+            {
+              name: "RSA-OAEP", // Encryption algorithm
+            },
+            publicKey, // Public key for encryption
+            encodedText // The text to encrypt
+          );
+
+          console.log("Encrypted Data (ArrayBuffer):", encryptedData);
+          return encryptedData; // Return encrypted data (ArrayBuffer)
+        } catch (err) {
+          console.error("Encryption failed", err);
+        }
+      }
+
+      // Decrypt encrypted data using the RSA private key
+      async function decryptObjectWithRSA(privateKey, encryptedData) {
+        try {
+          // Ensure encryptedData is passed as an ArrayBuffer
+          const decryptedData = await window.crypto.subtle.decrypt(
+            {
+              name: "RSA-OAEP", // Decryption algorithm
+            },
+            privateKey, // Private key for decryption
+            encryptedData // The encrypted data to decrypt
+          );
+
+          const dec = new TextDecoder();
+          const decryptedText = dec.decode(decryptedData);
+
+          // Deserialize the decrypted text back into an object
+          const decryptedObject = JSON.parse(decryptedText);
+          console.log("Decrypted Object:", decryptedObject);
+          return decryptedObject;
+        } catch (err) {
+          console.error("Decryption failed", err);
+        }
+      }
+
+      // Save keys to localStorage
+      function saveKeysToLocalStorage(publicKeyPEM, privateKeyPEM) {
+        localStorage.setItem("publicKey", publicKeyPEM);
+        localStorage.setItem("privateKey", privateKeyPEM);
+      }
+
+      // Load keys from localStorage
+      function loadKeysFromLocalStorage() {
+        const publicKeyPEM = localStorage.getItem("publicKey");
+        const privateKeyPEM = localStorage.getItem("privateKey");
+
+        return { publicKeyPEM, privateKeyPEM };
+      }
+
+      // Example usage:
+      async function runEncryptionDecryption() {
+        const { publicKey, privateKey } = await generateRSAKeyPair();
+
+        // Export keys to PEM format
+        const publicKeyPEM = await exportRSAKeyToPEM(publicKey, true);
+        const privateKeyPEM = await exportRSAKeyToPEM(privateKey, false);
+
+        // Save keys to localStorage
+        saveKeysToLocalStorage(publicKeyPEM, privateKeyPEM);
+
+        // Encrypt the object with the public key
+        const originalObject = { name: "John Doe", age: 30, country: "USA" };
+        const encryptedData = await encryptObjectWithRSA(
+          publicKey,
+          originalObject
+        );
+
+        // Load keys from localStorage (simulating reuse of keys)
+        const {
+          publicKeyPEM: savedPublicKeyPEM,
+          privateKeyPEM: savedPrivateKeyPEM,
+        } = loadKeysFromLocalStorage();
+
+        // Import keys from PEM format
+        const savedPublicKey = await importRSAKeyFromPEM(
+          savedPublicKeyPEM,
+          true
+        );
+        const savedPrivateKey = await importRSAKeyFromPEM(
+          savedPrivateKeyPEM,
+          false
+        );
+
+        // Decrypt the object with the private key
+        const decryptedObject = await decryptObjectWithRSA(
+          savedPrivateKey,
+          encryptedData
+        );
+
+        // Log the decrypted object
+        console.log("Decrypted Object:", decryptedObject);
+      }
+
+      runEncryptionDecryption();
+    </script>
+  </body>
+</html>

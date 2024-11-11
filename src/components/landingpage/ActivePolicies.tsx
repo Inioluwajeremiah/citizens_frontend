@@ -3,8 +3,10 @@ import searchIcon from "../../assets/icons/searchicon.svg";
 import health from "../../assets/images/health.png";
 import economy from "../../assets/images/economy.png";
 import education from "../../assets/images/education.png";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useGetPoliciesQuery } from "../../redux/apiSlice/policyApiSlice";
+import LoadingSpinner from "../LoadingSpinner";
 // import endpoint from '../../utils/endpoints'
 
 const HorizontalDivider = () => {
@@ -425,30 +427,48 @@ const activePoliciesData = [
 ];
 
 const ActivePolicies = () => {
-  // const [data, setData] = useState([]);
-  // const [loading, setLoading] = useState(false);
-  // const [itemsPerPage, setItemsPerPage] = useState(10);
   const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [category, setCategory] = useState("");
+  const [limit, setLimit] = useState(4);
   console.log(page);
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const categories = [
+    "Education",
+    "Healthcare",
+    "Environment",
+    "Technology",
+    "Finance",
+  ];
 
   const windowHeight = window.innerHeight;
   const scrollTop = document.documentElement.scrollTop;
   const scrollHeight = document.documentElement.scrollHeight;
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   const url = `${endpoint}?page=${page}&itemsPerPage=${itemsPerPage}`;
-  //   fetch(url)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       set;
-  //     });
-  // }, [page]);
-
   const handleScroll = () => {
     if (windowHeight + scrollTop + 1 >= scrollHeight) {
       setPage((prevPage) => prevPage + 1);
     }
+  };
+  const {
+    data: policiesData,
+    refetch,
+    isLoading: loadingPolicies,
+  } = useGetPoliciesQuery({
+    page,
+    limit,
+    search: searchTerm,
+    category,
+  });
+  const handleToggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleSelectCategory = (category: string) => {
+    setCategory(category);
+    setIsOpen(false); // Close dropdown after selection
   };
 
   useEffect(() => {
@@ -456,7 +476,22 @@ const ActivePolicies = () => {
     return () => window.addEventListener("scroll", handleScroll);
   });
 
-  //implement infinte scroll
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <section className="w-full pb-20 bg-activepoliciesBg bg-center relative">
@@ -471,17 +506,40 @@ const ActivePolicies = () => {
           {/* category and search */}
           <div className=" w-[80%] lg:w-1/2 flex flex-col gap-y-4  md:flex-row gap-x-4 items-center justify-center lg:justify-end mt-10 lg:mt-0 ">
             {/* select category */}
-            <div className=" bg-white inline-flex rounded-full pr-2 pl-4 py-2 flex-row items-center h-12  ">
+            <button
+              className=" bg-white inline-flex rounded-full pr-2 pl-4 py-2 flex-row items-center h-12 "
+              onClick={handleToggleDropdown}
+            >
               <p className="text-primaryColor text-sm">Categories</p>
-              <button className="flex flex-row items-center justify-center bg-primaryColor px-8 py-2 rounded-full ml-4">
+              <div className="flex flex-row items-center justify-center bg-primaryColor px-8 py-2 rounded-full ml-4">
                 <p className="text-white text-sm">All</p>
                 <img
                   src={chevronDownIcon}
                   alt="Citizens policies categories dropdown"
                   className="ml-2"
                 />
-              </button>
-            </div>
+              </div>
+
+              {isOpen && (
+                <div
+                  ref={dropdownRef}
+                  className="absolute mt-2 bg-white border rounded-lg shadow-lg w-fit p-4 z-10"
+                  id="select-dropdown-div"
+                >
+                  <ul>
+                    {categories.map((category) => (
+                      <li
+                        key={category}
+                        className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                        onClick={() => handleSelectCategory(category)}
+                      >
+                        {category}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </button>
 
             {/* search policy */}
             <div className=" flex flex-row items-center pl-4 pr-2 py-1 bg-white rounded-full h-12  ">
@@ -490,24 +548,34 @@ const ActivePolicies = () => {
                 alt="Citizens search policies icon"
                 className="w-6 h-6"
               />
-              <input type="Search" className="bg-white px-2 py-2" />
+              <input
+                type="Search"
+                className="bg-white px-2 py-2"
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
           </div>
         </div>
 
         {/* policies */}
         <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-10">
-          {activePoliciesData.map((item, index) => {
+          {loadingPolicies && (
+            <div className="w-full flex justify-center items-center">
+              <LoadingSpinner />
+            </div>
+          )}
+          {policiesData?.map((item, index) => {
             return (
               <Link
-                to={"policies/id"}
+                to={`/policies/${item._id}`}
+                state={item}
                 key={index}
                 className={`relative h-[316px] ${
                   !item.imageUrl && "bg-primaryColorAccent"
                 } `}
                 style={{
                   backgroundImage:
-                    (item.imageUrl && `url(${item.image})`) || "",
+                    (item.imageUrl && `url(${item.imageUrl})`) || "",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
