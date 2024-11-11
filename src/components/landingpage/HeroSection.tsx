@@ -45,7 +45,7 @@ const HeroSection: React.FC = () => {
         className="absolute top-0 inset-0 bg-[#055D57A8] z-10"
         style={{
           height:
-            windowidth < 1024
+            windowidth >= 1024
               ? window.innerHeight - 140
               : window.innerHeight + 120,
         }}
@@ -57,7 +57,7 @@ const HeroSection: React.FC = () => {
         // style={{ height: window.innerHeight - 140 }}
         style={{
           height:
-            windowidth < 1024
+            windowidth >= 1024
               ? window.innerHeight - 140
               : window.innerHeight + 120,
         }}
@@ -69,7 +69,7 @@ const HeroSection: React.FC = () => {
         // style={{ height: window.innerHeight - 140 }}
         style={{
           height:
-            windowidth < 1024
+            windowidth >= 1024
               ? window.innerHeight - 140
               : window.innerHeight + 120,
         }}
@@ -78,7 +78,7 @@ const HeroSection: React.FC = () => {
         <div className="relative container w-[80%] lg:w-full text-center">
           {/* large screen */}
           <div className="hidden lg:block relative w-full mt-20 ">
-            <p className=" font-bold text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl leading-[36px] md:leading-[50px] lg:leading-[68px] text-white tracking-[-0.96px] lg:tracking-[-1.6px]">
+            <p className=" font-bold w-[60%] mx-auto text-center text-xl sm:text-2xl md:text-4xl lg:text-5xl leading-[36px] md:leading-[50px] lg:leading-[68px] text-white tracking-[-0.96px] lg:tracking-[-1.6px]">
               Creating a platform to amplify Nigerian voices and <br /> foster
               dialogue between citizens and the government.
             </p>
