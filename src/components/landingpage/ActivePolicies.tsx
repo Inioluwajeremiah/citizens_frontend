@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetPoliciesQuery } from "../../redux/apiSlice/policyApiSlice";
 import LoadingSpinner from "../LoadingSpinner";
+import { endpoints } from "../../utils/endpoints";
 // import endpoint from '../../utils/endpoints'
 
 const HorizontalDivider = () => {
@@ -575,7 +576,9 @@ const ActivePolicies = () => {
                 } `}
                 style={{
                   backgroundImage:
-                    (item.imageUrl && `url(${item.imageUrl})`) || "",
+                    (item.imageUrl &&
+                      `url(${endpoints.proxyUrl + item.imageUrl})`) ||
+                    "",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}
