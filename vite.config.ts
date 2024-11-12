@@ -6,7 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/uploads": "http://localhost:7000",
+      "/uploads": "https://citizens-backend-lzzl.onrender.com",
     },
   },
+  base: "/",
 });
