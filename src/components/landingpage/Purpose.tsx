@@ -10,7 +10,7 @@ const Purpose = () => {
 
   return (
     <section className="w-[80%] lg:w-full container mx-auto flex flex-col items-center justify-center pb-20 bg-white ">
-      <p className="text-2xl lg:text-[40px] font-semibold text-center">
+      <p className="text-2xl lg:text-[40px] font-semibold text-center mt-20 lg:mt-0 ">
         Our <span className=" text-blackColor tracking-[-1.6px]">Purpose</span>
       </p>
       <p className="mt-10 text-base lg:text-2xl lg:leading-[40px] text-center">

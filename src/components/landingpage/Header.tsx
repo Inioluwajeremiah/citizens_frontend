@@ -110,7 +110,10 @@ const Header = () => {
             </NavLink>
           ))}
 
-          <Link to={"policies"} className="bg-primaryColor h-16 px-10">
+          <Link
+            to={"policies"}
+            className="bg-primaryColor h-16 px-10 flex flex-col items-center justify-center"
+          >
             <p className="text-white text-base font-semibold">Donate</p>
           </Link>
         </nav>
