@@ -7,7 +7,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetPoliciesQuery } from "../../redux/apiSlice/policyApiSlice";
 import LoadingSpinner from "../LoadingSpinner";
-import { endpoints } from "../../utils/endpoints";
 // import endpoint from '../../utils/endpoints'
 
 const HorizontalDivider = () => {
