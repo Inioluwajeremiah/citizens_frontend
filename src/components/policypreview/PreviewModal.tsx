@@ -28,7 +28,6 @@ const PreviewModal: React.FC<PreviewModalProps> = ({
   handleSetPlayAudioButton,
   policyId,
   userData,
-  refetchPolicy,
 }) => {
   const [userComment, setUserComent] = useState("");
   const [postComment, { isLoading: postingComment }] = usePostCommentMutation();
