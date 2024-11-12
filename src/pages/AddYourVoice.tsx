@@ -3,6 +3,7 @@ import Modal from "../components/Modal";
 import PreviewModal from "../components/policypreview/PreviewModal";
 import { useState } from "react";
 import EducationForm from "../forms/EducationForm";
+import { endpoints } from "../utils/endpoints";
 
 const AddYourVoice = () => {
   const location = useLocation();
@@ -17,7 +18,7 @@ const AddYourVoice = () => {
       <section
         className="w-full mt-20 h-[467px] relative  bg-no-repeat bg-cover bg-center"
         style={{
-          backgroundImage: `url('${policyData.imageUrl}')`,
+          backgroundImage: `url('${endpoints.proxyUrl + policyData.imageUrl}')`,
         }}
       >
         <div className="absolute h-[467px]  top-0 inset-0 bg-gradient-to-b from-[rgba(11,29,43,0)] to-[rgba(11,29,43,1)] z-10">

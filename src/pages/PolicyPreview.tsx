@@ -21,6 +21,7 @@ import {
   useUpdatePolicyViewsMutation,
 } from "../redux/apiSlice/policyApiSlice";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { endpoints } from "../utils/endpoints";
 
 // const content =
 //   "Sexual reproductive health rights (SRHR) are fundamental human rights that encompass a broad spectrum of issues related to sexuality, reproduction, and overall well-being. Recognized internationally, these rights emphasize the importance of providing individuals with access to comprehensive healthcare, education, and information, enabling them to make informed decisions about their sexual and reproductive lives. While significant progress has been made over the years, there remain numerous challenges and barriers to ensuring universal access to SRHR for all individuals around the world. This article delves into the importance of SRHR, its impact on individual lives and societies, the barriers faced, and the way forward to promote a more equitable and inclusive future. 1. Understanding Sexual Reproductive Health Rights At its core, SRHR embodies the notion that all individuals have the right to maintain their sexual health and well-being without discrimination or coercion. This includes access to essential services such as family planning, contraceptive options, maternal healthcare, prevention and treatment of sexually transmitted infections (STIs), and safe abortion services, where legal. Additionally, SRHR advocates for comprehensive sexual education, free from stigma and misinformation, to empower individuals to make responsible and informed choices regarding their bodies and reproductive choices. 2. Empowering Individuals through Education Education plays a crucial role in promoting SRHR. Comprehensive sexual education equips individuals with the knowledge and skills to understand their bodies, foster healthy relationships, prevent unwanted pregnancies and STIs, and make informed decisions about their sexual lives. However, in many parts of the world, access to comprehensive sexual education remains limited due to cultural, religious, or political reasons. It is imperative that policymakers and educational institutions recognize the significance of comprehensive sexual education in fostering responsible behavior, reducing teenage pregnancies, and preventing the spread of STIs.";
@@ -250,7 +251,7 @@ const PolicyPreview = () => {
           <section
             className="w-full mt-20 h-[467px] relative  bg-no-repeat bg-cover bg-center"
             style={{
-              backgroundImage: `url('${state.imageUrl}')`,
+              backgroundImage: `url('${endpoints.proxyUrl + state.imageUrl}')`,
             }}
           >
             <div className="absolute h-[467px]  top-0 inset-0 bg-gradient-to-b from-[rgba(11,29,43,0)] to-[rgba(11,29,43,1)] z-10">
