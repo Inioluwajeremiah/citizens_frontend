@@ -104,6 +104,15 @@ export const policyApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Policy"],
     }),
 
+    postComment: builder.mutation({
+      query: (data) => ({
+        url: `${endpoints.policyUrl}/comment/${data.id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Policy"],
+    }),
+
     deletePolicy: builder.mutation({
       query: ({ id }) => ({
         url: `${endpoints.policyUrl}deletePolicy/${id}`,
@@ -122,5 +131,6 @@ export const {
   useGetPolicyQuery,
   useUpdatePolicyViewsMutation,
   useEditPolicyMutation,
+  usePostCommentMutation,
   useDeletePolicyMutation,
 } = policyApiSlice;

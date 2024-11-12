@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import playIcon from "../../assets/icons/playicon.svg";
+import pauseicon from "../../assets/icons/pauseicon.svg";
+import stopicon from "../../assets/icons/stopicon.svg";
 
 interface TextReaderWithHighlightProps {
   text: string;
@@ -82,6 +84,7 @@ const TextReaderWithHighlight: React.FC<TextReaderWithHighlightProps> = ({
   ));
 
   console.log("playAudioButtonPressed ===> ", playAudioButtonPressed);
+  console.log("renderedText ===> ", renderedText);
 
   useEffect(() => {
     if (playAudioButtonPressed === true) {
@@ -89,6 +92,14 @@ const TextReaderWithHighlight: React.FC<TextReaderWithHighlightProps> = ({
     }
   }, [playAudioButtonPressed]);
 
+  useEffect(() => {
+    const insertPolicyContent = document.getElementById(
+      "insertPolicyContent"
+    ) as HTMLDivElement | null;
+    if (insertPolicyContent) {
+      // insertPolicyContent.innerText = renderedText;
+    }
+  });
   return (
     <>
       <div className="w-full flex flex-row items-start justify-between">
@@ -107,16 +118,19 @@ const TextReaderWithHighlight: React.FC<TextReaderWithHighlightProps> = ({
           />
           <p className="font-medium text-lg text-primaryColor">Play audio</p>
         </button>
-        <button onClick={playText} disabled={isPlaying}>
-          Play
-        </button>
+
         <button onClick={pauseText} disabled={!isPlaying}>
-          Pause
+          <img src={pauseicon} alt="youthtrackit pause audio icon " />
         </button>
-        <button onClick={stopText}>Stop</button>
+        <button onClick={stopText}>
+          {" "}
+          <img src={stopicon} alt="youthtrackit stop audio icon " />
+        </button>
       </div>
 
-      <p className="text-sm lg:text-base mt-10">{renderedText}</p>
+      <p id="insertPolicyContent" className="text-sm lg:text-base mt-10">
+        {renderedText}
+      </p>
     </>
   );
 };

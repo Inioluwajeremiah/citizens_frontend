@@ -2,8 +2,26 @@ import chevronDownIcon from "../assets/icons/ChevronDown.svg";
 import searchIcon from "../assets/icons/searchicon.svg";
 import { Link } from "react-router-dom";
 import { activePoliciesData } from "../utils/data";
+import { useEffect, useState } from "react";
 
 const Policies = () => {
+  const [page, setPage] = useState(1);
+  console.log("handleScroll page ==> ", page);
+
+  const windowHeight = window.innerHeight;
+  const scrollTop = document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight;
+  const handleScroll = () => {
+    if (windowHeight + scrollTop + 1 >= scrollHeight) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.addEventListener("scroll", handleScroll);
+  });
+
   return (
     <section className="w-full py-20 mt-20">
       <div className="container mx-auto w-[80%] lg:w-full  ">

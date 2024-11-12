@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { encryptWithRSA } from "../../utils/subtlecrypto";
 import { setCredentials } from "../../redux/slices/authSlice";
+import { PolicyData } from "../interfaces/PolicyInterface";
 
 interface UserDataProps {
   email: string;
@@ -15,11 +16,13 @@ interface SigninProps {
   onPressSignup: () => void;
   closeSigninModal: () => void;
   setShowSucessModal: () => void;
+  policyData: PolicyData;
 }
 
 const Signin: React.FC<SigninProps> = ({
   onPressSignup,
   setShowSucessModal,
+  policyData,
 }) => {
   const [userData, setUserData] = useState<UserDataProps>({
     email: "",
@@ -50,7 +53,7 @@ const Signin: React.FC<SigninProps> = ({
         setShowSucessModal();
         setTimeout(() => {
           setShowSucessModal();
-          navigate("add-your-voice", { state: "policyId" });
+          navigate("/add-your-voice", { state: { policyData: policyData } });
         }, 3000);
       }
 
@@ -115,12 +118,18 @@ const Signin: React.FC<SigninProps> = ({
 
       {/* forgot password */}
       <button className="mx-auto" onClick={handleLogin}>
-        <p className="text-[#828DA9] text-xs py-4">Forgot Password?</p>
+        <p className="text-[#828DA9] text-[10px] md:text-xs py-4">
+          Forgot Password?
+        </p>
       </button>
-      <div className="mt-2 flex flex-row items-center gap-x-2">
-        <p className="text-blackColor text-base">Don't have an account? </p>
+      <div className="mt-2 flex flex-row  items-center gap-x-2">
+        <p className="text-blackColor text-xs md:text-sm lg:text-base">
+          Don't have an account?{" "}
+        </p>
         <button onClick={onPressSignup}>
-          <p className="text-[#0A6A69] text-base">Sign up</p>
+          <p className="text-[#0A6A69] text-xs md:text-sm lg:text-base">
+            Sign up
+          </p>
         </button>
       </div>
     </div>

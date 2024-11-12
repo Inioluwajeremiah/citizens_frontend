@@ -16,6 +16,7 @@ import AddNewPolicy from "./pages/dashboard/AddNewPolicy";
 import PolicyRoute from "./components/dashboard/PolicyRoute";
 import Home from "./pages/dashboard/Home";
 import AddNewBlog from "./pages/dashboard/AddNewBlog";
+import ContactUs from "./pages/ContactUs";
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
       {
         path: "/blog",
         element: <Blog />,
+      },
+      {
+        path: "/contact",
+        element: <ContactUs />,
       },
       {
         path: "",

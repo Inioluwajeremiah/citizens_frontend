@@ -1,4 +1,4 @@
-import { Editor } from "@tinymce/tinymce-react";
+// import { Editor } from "@tinymce/tinymce-react";
 
 import { useEffect, useState } from "react";
 import Modal from "../../components/Modal";
@@ -18,6 +18,8 @@ const AddNewPolicy = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [associatedPolicy, setAssociatePolicy] = useState("");
+  const [demand, setDemand] = useState("");
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [showUploadImageModal, setShowUploadImageModal] = useState(false);
@@ -46,6 +48,8 @@ const AddNewPolicy = () => {
         const res = await createPolicy({
           userId: userData?._id || "",
           title: title,
+          demand: demand,
+          associatedPolicy: associatedPolicy,
           category: category,
           description: description,
           imageUrl: imageUrl,
@@ -54,6 +58,8 @@ const AddNewPolicy = () => {
           setShowSucessModal(true);
           setTitle("");
           setCategory("");
+          setDemand("");
+          setAssociatePolicy("");
           setImageUrl("");
           setDescription("");
           setTimeout(() => {
@@ -91,6 +97,7 @@ const AddNewPolicy = () => {
   useEffect(() => {
     decryptData();
   }, [userInfo]);
+
   return (
     <div className="py-10">
       {/* header 1 */}
@@ -152,11 +159,52 @@ const AddNewPolicy = () => {
             category1
           </option>
         </select>
+        {/* 3. description */}
         <label htmlFor="password" className=" text-sm ">
-          3. Description
+          3. Demand
         </label>
-        <p className="mt-2"></p>
-        <Editor
+        <input
+          type="text"
+          name="demand"
+          value={title}
+          id="demand"
+          placeholder="Demand"
+          className={`mt-2 mb-6 border w-full p-4 outline-none focus:border-primaryColor text-sm bg-[#FCFCFD] ${
+            errorIndex === 2 && "border-red-500"
+          }`}
+          onChange={(e) => setDemand(e.target.value)}
+        />
+        <label htmlFor="password" className=" text-sm ">
+          4. Policy
+        </label>
+        <input
+          type="text"
+          name="associatePolicy"
+          value={title}
+          id="associatePolicy"
+          placeholder="Policy"
+          className={`mt-2 mb-6 border w-full p-4 outline-none focus:border-primaryColor text-sm bg-[#FCFCFD] ${
+            errorIndex === 3 && "border-red-500"
+          }`}
+          onChange={(e) => setAssociatePolicy(e.target.value)}
+        />
+        <label htmlFor="password" className=" text-sm ">
+          5. Description
+        </label>
+        <textarea
+          name="description"
+          value={description}
+          id="description"
+          placeholder="Description"
+          cols={8}
+          rows={5}
+          className={`mt-2 mb-6 border w-full p-4 outline-none focus:border-primaryColor text-sm bg-[#FCFCFD] ${
+            errorIndex === 4 && "border-red-500"
+          }`}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        {/* <p className="mt-2"></p> */}
+        {/* <Editor
           apiKey="y96gd1h1ls6ru235q03dntkvp2d5vzj0r64jag037t9m4f1e"
           init={{
             plugins: [
@@ -231,8 +279,8 @@ const AddNewPolicy = () => {
           }}
           initialValue=""
           onEditorChange={(e) => setDescription(e)}
-        />
-        <p className="mt-6"></p>
+        /> */}
+        {/* <p className="mt-6"></p> */}
         <label htmlFor="password" className=" text-sm ">
           3. Add Image
         </label>{" "}

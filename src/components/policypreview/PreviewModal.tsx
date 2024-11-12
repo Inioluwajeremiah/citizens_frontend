@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import messageIcon from "../../assets/icons/messageicon.svg";
-// import playIcon from "../../assets/icons/playicon.svg";
 import TextReaderWithHighlight from "./TextReaderWithHighlight";
+import { usePostCommentMutation } from "../../redux/apiSlice/policyApiSlice";
+import { UserDataProps } from "../interfaces/UserInterface";
 
 interface Comment {
-  title: string;
-  description: string;
-  date: string;
-  imageUrl: string;
+  userId: string;
+  comment: string;
+  timestamp: string;
+  _id: string;
 }
 
 interface PreviewModalProps {
@@ -15,6 +16,9 @@ interface PreviewModalProps {
   comments: Array<Comment>;
   playAudioButtonPressed: boolean;
   handleSetPlayAudioButton: () => void;
+  policyId: string;
+  userData: UserDataProps;
+  refetchPolicy: () => void;
 }
 
 const PreviewModal: React.FC<PreviewModalProps> = ({
@@ -22,9 +26,28 @@ const PreviewModal: React.FC<PreviewModalProps> = ({
   comments,
   playAudioButtonPressed,
   handleSetPlayAudioButton,
+  policyId,
+  userData,
+  refetchPolicy,
 }) => {
-  // const [comment, setComment] = useState("");
-  // const handlePostComment = () => {};
+  const [userComment, setUserComent] = useState("");
+  const [postComment, { isLoading: postingComment }] = usePostCommentMutation();
+
+  const handlePostComment = async () => {
+    const res = await postComment({
+      id: policyId,
+      userId: userData._id,
+      comment: userComment,
+    });
+    console.log("handlePostComment res ===> ", res);
+
+    if (res.data) {
+      setUserComent("");
+      // refetchPolicy();
+    }
+  };
+
+  console.log("comments at preview modal ====> ", comments);
 
   return (
     <div className="relative w-full flex flex-col items-start justify-start  bg-white p-4 md:p-6 lg:px-10 lg:py-10 overflow-y-scroll">
@@ -64,52 +87,58 @@ const PreviewModal: React.FC<PreviewModalProps> = ({
             id="comment"
             cols={30}
             rows={2}
+            value={userComment}
             className="w-[75%] flex-1 text-base text-[#565973] font-semibold bg-[#F3F3F3] outline-none"
+            onChange={(e) => setUserComent(e.target.value)}
           >
             Add a comment
           </textarea>
           {/* post button */}
-          <button className="w-[25%] bg-primaryColor px-6 py-3 ">
+          <button
+            className="w-[25%] bg-primaryColor px-6 py-3 "
+            onClick={handlePostComment}
+          >
             <p className="text-white text-sm lg:text-base font-semibold">
-              Post
+              {postingComment ? "Loading..." : "Post"}
             </p>
           </button>
         </div>
       </div>
 
       {/* list comments */}
-      <div className="flex flex-col items-start justify-start mt-10">
+      <div className="flex w-full flex-col items-start justify-start mt-10">
         {comments.map((item, index) => (
           <div
             key={index}
             className="h-fit w-full flex flex-row items-start justify-between gap-x-4 max-h-24 mt-6 rounded-lg  "
           >
             {/* user logo */}
-            <div className="relative rounded-full">
+
+            <div className="relative rounded-full ">
               <img
-                src={item.imageUrl}
+                src={"/src/assets/images/avatar.png"}
                 alt="CitizensRep user image"
-                className="h-[36px] w-[36px] md:h-[36px] md:w-[36px] lg:h-full lg:w-full -m-1"
+                className="h-[36px] w-[36px] md:h-[36px] md:w-[36px] lg:h-[42px] lg:w-[42px]"
               />
               <img
                 src={messageIcon}
                 alt=""
-                className="absolute bottom-0 right-1  h-4 w-4"
+                className="absolute bottom-1 right-0  h-4 w-4"
               />
             </div>
-            {/* <img src="" alt="" className="w-10 h-10 lg:w-12 lg:h-12 rounded-full " /> */}
+
             {/* title and date */}
-            <div className="w-full flex flex-col items-start  bg-[#EAF4F3] rounded-lg px-4 py-2 max-h-24 overflow-y-scroll">
+            <div className="w-full flex flex-1 flex-col items-start  bg-[#EAF4F3] rounded-lg px-4 py-2 max-h-24 overflow-y-scroll">
               <div className="w-full flex flex-row items-start justify-between mt-2 ">
                 <h6 className="text-blackColor font-bold text-sm lg:text-base">
-                  {item.title}
+                  {userData.username}
                 </h6>
-                <p className="text-xs lg:text-sm mt-2">{item.date}</p>
+                <p className="text-xs lg:text-sm mt-2">
+                  {new Date(item.timestamp).toLocaleDateString()}
+                </p>
               </div>
 
-              <p className="text-base mt-4 text-[#0B0F19]">
-                {item.description}
-              </p>
+              <p className="text-base mt-4 text-[#0B0F19]">{item.comment}</p>
             </div>
           </div>
         ))}

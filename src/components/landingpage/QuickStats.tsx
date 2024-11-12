@@ -3,25 +3,25 @@ const QuickStats = () => {
     {
       title: "Project Tracked",
       description:
-        "The International Institute of Tropical Agriculture (IITA) is a non-profit ins",
+        " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis quo sit quos doloremque iusto autem saepe. Doloremque, ab voluptatem eaque quod ipsa quam dolorum voluptas beatae similique libero odio maiores?",
       figure: 38,
     },
     {
       title: "Respondents",
       description:
-        "The International Institute of Tropical Agriculture (IITA) is a non-profit ins",
+        " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis quo sit quos doloremque iusto autem saepe. Doloremque, ab voluptatem eaque quod ipsa quam dolorum voluptas beatae similique libero odio maiores?",
       figure: "761+",
     },
     {
       title: "Success stories",
       description:
-        "The International Institute of Tropical Agriculture (IITA) is a non-profit ins",
+        " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis quo sit quos doloremque iusto autem saepe. Doloremque, ab voluptatem eaque quod ipsa quam dolorum voluptas beatae similique libero odio maiores?",
       figure: "83%",
     },
     {
       title: "Title",
       description:
-        "The International Institute of Tropical Agriculture (IITA) is a non-profit ins",
+        " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reiciendis quo sit quos doloremque iusto autem saepe. Doloremque, ab voluptatem eaque quod ipsa quam dolorum voluptas beatae similique libero odio maiores?",
       figure: "12%",
     },
   ];

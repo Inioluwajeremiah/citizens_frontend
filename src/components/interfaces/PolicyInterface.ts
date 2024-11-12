@@ -1,7 +1,10 @@
 export interface PolicyData {
   userId: string;
   title: string;
+
   category: string;
+  demand: string;
+  associatedPolicy: string;
   description: string;
   imageUrl: string;
   startTime?: Date;

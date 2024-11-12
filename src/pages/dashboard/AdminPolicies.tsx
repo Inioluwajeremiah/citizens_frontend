@@ -11,6 +11,7 @@ import { RootState } from "../../redux/store";
 import { UserDataProps } from "../../components/interfaces/UserInterface";
 import { useSelector } from "react-redux";
 import { useGetPoliciesQuery } from "../../redux/apiSlice/policyApiSlice";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 // const activePoliciesData = [
 //   {
@@ -106,13 +107,6 @@ const AdminPolicies = () => {
   const handleToggleOptions = () => {
     setShowOPtionsModal(!showOPtionsModal);
   };
-
-  // const handleClickSelectCategory = () => {
-  //   const selectCategory = document.getElementById(
-  //     "select-category-dropdown"
-  //   ) as HTMLSelectElement;
-  //   if (selectCategory) selectCategory.click();
-  // };
 
   const decryptData = async () => {
     const decryptedText = await decryptWithRSA(
@@ -233,7 +227,7 @@ const AdminPolicies = () => {
         </div>
       </div>
 
-      {loadingPolicies && <p>laoding...</p>}
+      {loadingPolicies && <LoadingSpinner />}
       {/* policies */}
       <div className=" grid grid-cols-2 gap-10 px-10 mt-10 pb-14">
         {policiesData?.map((item, index) => (

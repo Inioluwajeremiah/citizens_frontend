@@ -428,15 +428,15 @@ const HorizontalDivider = () => {
 // ];
 
 const ActivePolicies = () => {
-  const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("");
   // const [limit, setLimit] = useState(4);
-  console.log(page);
+
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const categories = [
+    "All",
     "Education",
     "Healthcare",
     "Environment",
@@ -444,25 +444,14 @@ const ActivePolicies = () => {
     "Finance",
   ];
 
-  const windowHeight = window.innerHeight;
-  const scrollTop = document.documentElement.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight;
+  const { data: policiesData, isLoading: loadingPolicies } =
+    useGetPoliciesQuery({
+      page: 1,
+      limit: 4,
+      search: searchTerm,
+      category: category,
+    });
 
-  const handleScroll = () => {
-    if (windowHeight + scrollTop + 1 >= scrollHeight) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  };
-  const {
-    data: policiesData,
-
-    isLoading: loadingPolicies,
-  } = useGetPoliciesQuery({
-    page: page,
-    limit: 4,
-    search: searchTerm,
-    category: category,
-  });
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -471,11 +460,6 @@ const ActivePolicies = () => {
     setCategory(category);
     setIsOpen(false); // Close dropdown after selection
   };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.addEventListener("scroll", handleScroll);
-  });
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -527,14 +511,20 @@ const ActivePolicies = () => {
                   className="absolute mt-2 bg-white border rounded-lg shadow-lg w-fit p-4 z-10"
                   id="select-dropdown-div"
                 >
-                  <ul>
+                  <ul className="flex-col items-start justify-start">
                     {categories.map((category) => (
                       <li
                         key={category}
                         className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-                        onClick={() => handleSelectCategory(category)}
+                        onClick={() =>
+                          handleSelectCategory(
+                            category === "All" ? "" : category
+                          )
+                        }
                       >
-                        {category}
+                        <p className="text-xs md:text-base text-left">
+                          {category}
+                        </p>
                       </li>
                     ))}
                   </ul>
@@ -551,7 +541,7 @@ const ActivePolicies = () => {
               />
               <input
                 type="Search"
-                className="bg-white px-2 py-2"
+                className="bg-white px-2 py-2 outline-none"
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
@@ -576,9 +566,7 @@ const ActivePolicies = () => {
                 } `}
                 style={{
                   backgroundImage:
-                    (item.imageUrl &&
-                      `url(${endpoints.proxyUrl + item.imageUrl})`) ||
-                    "",
+                    (item.imageUrl && `url(${item.imageUrl})`) || "",
                   backgroundSize: "cover",
                   backgroundPosition: "center",
                 }}

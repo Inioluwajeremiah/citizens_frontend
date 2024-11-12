@@ -16,76 +16,80 @@ import PreviewModal from "../components/policypreview/PreviewModal";
 import { RootState } from "../redux/store";
 import { UserDataProps } from "../components/interfaces/UserInterface";
 import { decryptWithRSA } from "../utils/subtlecrypto";
-import { useUpdatePolicyViewsMutation } from "../redux/apiSlice/policyApiSlice";
+import {
+  useGetPolicyQuery,
+  useUpdatePolicyViewsMutation,
+} from "../redux/apiSlice/policyApiSlice";
+import LoadingSpinner from "../components/LoadingSpinner";
 
-const content =
-  "Sexual reproductive health rights (SRHR) are fundamental human rights that encompass a broad spectrum of issues related to sexuality, reproduction, and overall well-being. Recognized internationally, these rights emphasize the importance of providing individuals with access to comprehensive healthcare, education, and information, enabling them to make informed decisions about their sexual and reproductive lives. While significant progress has been made over the years, there remain numerous challenges and barriers to ensuring universal access to SRHR for all individuals around the world. This article delves into the importance of SRHR, its impact on individual lives and societies, the barriers faced, and the way forward to promote a more equitable and inclusive future. 1. Understanding Sexual Reproductive Health Rights At its core, SRHR embodies the notion that all individuals have the right to maintain their sexual health and well-being without discrimination or coercion. This includes access to essential services such as family planning, contraceptive options, maternal healthcare, prevention and treatment of sexually transmitted infections (STIs), and safe abortion services, where legal. Additionally, SRHR advocates for comprehensive sexual education, free from stigma and misinformation, to empower individuals to make responsible and informed choices regarding their bodies and reproductive choices. 2. Empowering Individuals through Education Education plays a crucial role in promoting SRHR. Comprehensive sexual education equips individuals with the knowledge and skills to understand their bodies, foster healthy relationships, prevent unwanted pregnancies and STIs, and make informed decisions about their sexual lives. However, in many parts of the world, access to comprehensive sexual education remains limited due to cultural, religious, or political reasons. It is imperative that policymakers and educational institutions recognize the significance of comprehensive sexual education in fostering responsible behavior, reducing teenage pregnancies, and preventing the spread of STIs.";
+// const content =
+//   "Sexual reproductive health rights (SRHR) are fundamental human rights that encompass a broad spectrum of issues related to sexuality, reproduction, and overall well-being. Recognized internationally, these rights emphasize the importance of providing individuals with access to comprehensive healthcare, education, and information, enabling them to make informed decisions about their sexual and reproductive lives. While significant progress has been made over the years, there remain numerous challenges and barriers to ensuring universal access to SRHR for all individuals around the world. This article delves into the importance of SRHR, its impact on individual lives and societies, the barriers faced, and the way forward to promote a more equitable and inclusive future. 1. Understanding Sexual Reproductive Health Rights At its core, SRHR embodies the notion that all individuals have the right to maintain their sexual health and well-being without discrimination or coercion. This includes access to essential services such as family planning, contraceptive options, maternal healthcare, prevention and treatment of sexually transmitted infections (STIs), and safe abortion services, where legal. Additionally, SRHR advocates for comprehensive sexual education, free from stigma and misinformation, to empower individuals to make responsible and informed choices regarding their bodies and reproductive choices. 2. Empowering Individuals through Education Education plays a crucial role in promoting SRHR. Comprehensive sexual education equips individuals with the knowledge and skills to understand their bodies, foster healthy relationships, prevent unwanted pregnancies and STIs, and make informed decisions about their sexual lives. However, in many parts of the world, access to comprehensive sexual education remains limited due to cultural, religious, or political reasons. It is imperative that policymakers and educational institutions recognize the significance of comprehensive sexual education in fostering responsible behavior, reducing teenage pregnancies, and preventing the spread of STIs.";
 
-const comments = [
-  {
-    title: "Ralph Edwards",
-    description:
-      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
-    date: "Aug 19, 2021",
-    imageUrl: "/src/assets/images/avatar.png",
-  },
-  {
-    title: "Ralph Edwards",
-    description:
-      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
-    date: "Aug 19, 2021",
-    imageUrl: "/src/assets/images/avatar.png",
-  },
-  {
-    title: "Ralph Edwards",
-    description:
-      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
-    date: "Aug 19, 2021",
-    imageUrl: "/src/assets/images/avatar.png",
-  },
-  {
-    title: "Ralph Edwards",
-    description:
-      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
-    date: "Aug 19, 2021",
-    imageUrl: "/src/assets/images/avatar.png",
-  },
-  {
-    title: "Ralph Edwards",
-    description:
-      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
-    date: "Aug 19, 2021",
-    imageUrl: "/src/assets/images/avatar.png",
-  },
-  {
-    title: "Ralph Edwards",
-    description:
-      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
-    date: "Aug 19, 2021",
-    imageUrl: "/src/assets/images/avatar.png",
-  },
-  {
-    title: "Ralph Edwards",
-    description:
-      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
-    date: "Aug 19, 2021",
-    imageUrl: "/src/assets/images/avatar.png",
-  },
-  {
-    title: "Ralph Edwards",
-    description:
-      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
-    date: "Aug 19, 2021",
-    imageUrl: "/src/assets/images/avatar.png",
-  },
-  {
-    title: "Ralph Edwards",
-    description:
-      "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
-    date: "Aug 19, 2021",
-    imageUrl: "/src/assets/images/avatar.png",
-  },
-];
+// const comments = [
+//   {
+//     title: "Ralph Edwards",
+//     description:
+//       "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+//     date: "Aug 19, 2021",
+//     imageUrl: "/src/assets/images/avatar.png",
+//   },
+//   {
+//     title: "Ralph Edwards",
+//     description:
+//       "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+//     date: "Aug 19, 2021",
+//     imageUrl: "/src/assets/images/avatar.png",
+//   },
+//   {
+//     title: "Ralph Edwards",
+//     description:
+//       "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+//     date: "Aug 19, 2021",
+//     imageUrl: "/src/assets/images/avatar.png",
+//   },
+//   {
+//     title: "Ralph Edwards",
+//     description:
+//       "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+//     date: "Aug 19, 2021",
+//     imageUrl: "/src/assets/images/avatar.png",
+//   },
+//   {
+//     title: "Ralph Edwards",
+//     description:
+//       "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+//     date: "Aug 19, 2021",
+//     imageUrl: "/src/assets/images/avatar.png",
+//   },
+//   {
+//     title: "Ralph Edwards",
+//     description:
+//       "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+//     date: "Aug 19, 2021",
+//     imageUrl: "/src/assets/images/avatar.png",
+//   },
+//   {
+//     title: "Ralph Edwards",
+//     description:
+//       "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+//     date: "Aug 19, 2021",
+//     imageUrl: "/src/assets/images/avatar.png",
+//   },
+//   {
+//     title: "Ralph Edwards",
+//     description:
+//       "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+//     date: "Aug 19, 2021",
+//     imageUrl: "/src/assets/images/avatar.png",
+//   },
+//   {
+//     title: "Ralph Edwards",
+//     description:
+//       "In mauris porttitor tincidunt mauris massa sit lorem sed scelerisque. Fringilla pharetra vel massa enim sollicitudin cras. At pulvinar eget sociis adipiscing eget donec ultricies nibh tristique.",
+//     date: "Aug 19, 2021",
+//     imageUrl: "/src/assets/images/avatar.png",
+//   },
+// ];
 
 const PolicyPreview = () => {
   const data = [
@@ -108,7 +112,24 @@ const PolicyPreview = () => {
   const [updatePolicyViews, { isLoading: loadingViews }] =
     useUpdatePolicyViewsMutation();
 
-  const policyDescription = state?.description.replace(/<[^>]+>/g, "");
+  const {
+    data: policyData,
+    isLoading: loadingPolicyData,
+    refetch: refetchPolicy,
+  } = useGetPolicyQuery({
+    id: state._id,
+  });
+
+  console.log("policy data from policy preview screen ====>", policyData);
+
+  // const policyDescription = state?.description.replace(/<\/?[^>]+(>|$)/g);
+
+  // console.log("policyDescription ===> ", policyDescription);
+  // console.log("description ===> ", state?.description);
+
+  // console.log("policy comments at preview policy ===> ", state?.comments);
+  // console.log("passed state at preview policy ===> ", state);
+
   const decryptData = async () => {
     const decryptedText = await decryptWithRSA(
       import.meta.env.VITE_PRIVATE_KEY,
@@ -220,44 +241,108 @@ const PolicyPreview = () => {
     return () => clearTimeout(timeout);
   });
 
-  if (loadingViews) {
-    return <p>Loading</p>;
-  }
   return (
     <>
-      {/* hero section */}
-      <section
-        className="w-full mt-20 h-[467px] relative bg-center"
-        style={{
-          backgroundImage: "url('/src/assets/images/policypreview.png')",
-        }}
-      >
-        <div className="absolute h-[467px]  top-0 inset-0 bg-gradient-to-b from-[rgba(11,29,43,0)] to-[rgba(11,29,43,1)] z-10">
-          <div className=" w-[80%] lg:w-full container mx-auto h-full  flex flex-col justify-center  ">
-            <p className="text-[40px] text-white leading-[70px] w-[50%] md:w-[40%] lg:w-[25%] font-medium tracking-[-1.6px]">
-              {/* {     Sexual Reproductive health and right} */}
-              {state?.title}
-            </p>
-            <div className="mt-10 flex flex-row items-center justify-between">
-              {/* play audio button  */}
+      {loadingPolicyData ? (
+        <LoadingSpinner />
+      ) : (
+        <>
+          <section
+            className="w-full mt-20 h-[467px] relative  bg-no-repeat bg-cover bg-center"
+            style={{
+              backgroundImage: `url('${state.imageUrl}')`,
+            }}
+          >
+            <div className="absolute h-[467px]  top-0 inset-0 bg-gradient-to-b from-[rgba(11,29,43,0)] to-[rgba(11,29,43,1)] z-10">
+              <div className=" w-[80%] lg:w-full container mx-auto h-full  flex flex-col justify-center  ">
+                <p className="text-[40px] text-white leading-[70px] w-[50%] md:w-[40%] lg:w-[25%] font-medium tracking-[-1.6px]">
+                  {/* {     Sexual Reproductive health and right} */}
+                  {state?.title}
+                </p>
+                <div className="mt-10 flex flex-row items-center justify-between">
+                  {/* play audio button  */}
+                  <button
+                    className="hidden md:flex flow-row items-center gap-x-2"
+                    onClick={handlePlayAudioButton}
+                  >
+                    <img
+                      src={playIcon}
+                      alt="citizensrep play converted policy text to audio  button"
+                      className="h-6 w-6"
+                    />
+                    <p className="font-medium text-lg text-[#A6D845]">
+                      Play audio
+                    </p>
+                  </button>
+
+                  {/* add your voice button ===> large screen */}
+                  {userInfo ? (
+                    <Link
+                      to="/add-your-voice"
+                      state={{
+                        policyData: policyData.data,
+                        userData: userData,
+                      }}
+                      className="hidden md:flex flow-row items-center gap-x-2 bg-primaryColor px-8 py-4"
+                    >
+                      <Megaphoneicon color="#fff" />
+
+                      <p className="text-white"> Add your voice</p>
+                      <ForwardArrow color="#fff" />
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={handleToggleSigninModal}
+                      className="hidden md:flex flow-row items-center gap-x-2 bg-primaryColor px-8 py-4"
+                    >
+                      <Megaphoneicon color="#fff" />
+                      {/* <img
+                src={megaphoneIcon}
+                alt="citizensrep add your voice forward arrow "
+              /> */}
+                      <p className="text-white"> Add your voice</p>
+                      <ForwardArrow color="#fff" />
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* introduction */}
+          <section className=" py-20 bg-primaryColorAccent">
+            <div className="container w-[80%] lg:w-full mx-auto">
+              <p className="text-center text-blackColor text-[32px] tracking-tighter font-medium">
+                Introduction
+              </p>
+              <p className="text-center text-blackColor text-base leading-[27px] mt-6">
+                {/* { Championing comprehensive well-being and individual autonomy, the
+            government's progressive policy on sexual reproductive health and
+            rights endeavors to ensure equitable access to quality healthcare,
+            education, and services, fostering informed decision-making, gender
+            equality, and reproductive freedom for individuals across all
+            backgrounds and circumstances} */}
+                {policyData?.data?.description.length > 200
+                  ? policyData?.data?.description.slice(0, 200) + "..."
+                  : policyData?.data?.description}
+              </p>
+
               <button
-                className="flex flow-row items-center gap-x-2"
-                onClick={handlePlayAudioButton}
+                className="flex flow-row items-center  mx-auto mt-6"
+                onClick={handleToggleFullPreviewModal}
               >
-                <img
-                  src={playIcon}
-                  alt="citizensrep play converted policy text to audio  button"
-                  className="h-6 w-6"
-                />
-                <p className="font-medium text-lg text-[#A6D845]">Play audio</p>
+                <p className="text-primaryColor font-semibold text-sm lg:text-lg">
+                  Learn More
+                </p>
+                <ForwardArrow color="#226c67" />
               </button>
 
               {/* add your voice button */}
               {userInfo ? (
                 <Link
                   to="/add-your-voice"
-                  state={{ policyData: state, userData: userData }}
-                  className="flex flow-row items-center gap-x-2 bg-primaryColor px-8 py-4"
+                  state={{ policyData: policyData?.data, userData: userData }}
+                  className="flex md:hidden flow-row items-center gap-x-2 bg-primaryColor px-8 py-4 mt-6"
                 >
                   <Megaphoneicon color="#fff" />
 
@@ -267,7 +352,7 @@ const PolicyPreview = () => {
               ) : (
                 <button
                   onClick={handleToggleSigninModal}
-                  className="flex flow-row items-center gap-x-2 bg-primaryColor px-8 py-4"
+                  className="flex md:hidden flow-row items-center gap-x-2 bg-primaryColor px-8 py-4 mt-6"
                 >
                   <Megaphoneicon color="#fff" />
                   {/* <img
@@ -279,100 +364,76 @@ const PolicyPreview = () => {
                 </button>
               )}
             </div>
+          </section>
+
+          {loadingViews && <LoadingSpinner />}
+
+          {/* citizens rep */}
+          <section className="bg-[#FAFAFA] py-20 w-full">
+            <CitizensResponse data={data} />
+            <CitizenVoices />
+          </section>
+
+          {/* banner */}
+          <div className="bg-primaryColorAccent py-10">
+            <div className="w-[80%] lg:w-full container mx-auto ">
+              <div className="flex flex-row items-center gap-x-2 justify-center">
+                <img
+                  src={infoIcon}
+                  alt="Citizensrep info icon"
+                  className="w-14 h-14 lg:w-8 lg:h-8"
+                />
+                <p className="text-base text-primaryColor text-center ">
+                  <span className="font-semibold">DISCLAIMER:</span> The website
+                  owners do not endorse any specific views, statements, or
+                  content shared by participants on the platform.
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* introduction */}
-      <section className=" py-20 bg-primaryColorAccent">
-        <div className="container w-[80%] lg:w-full mx-auto">
-          <p className="text-center text-blackColor text-[32px] tracking-tighter font-medium">
-            Introduction
-          </p>
-          <p className="text-center text-blackColor text-base leading-[27px] mt-6">
-            {/* { Championing comprehensive well-being and individual autonomy, the
-            government's progressive policy on sexual reproductive health and
-            rights endeavors to ensure equitable access to quality healthcare,
-            education, and services, fostering informed decision-making, gender
-            equality, and reproductive freedom for individuals across all
-            backgrounds and circumstances} */}
-            {policyDescription?.length > 200
-              ? policyDescription.slice(0, 200) + "..."
-              : policyDescription}
-          </p>
+          {/* citizens report */}
+          <CitizenReport />
 
-          <button
-            className="flex flow-row items-center  mx-auto mt-6"
-            onClick={handleToggleFullPreviewModal}
-          >
-            <p className="text-primaryColor font-semibold text-sm lg:text-lg">
-              Learn More
-            </p>
-            <ForwardArrow color="#226c67" />
-          </button>
-        </div>
-      </section>
+          {showSignInModal && (
+            <Modal closeAllModal={handleCloseAllModal}>
+              <Signin
+                onPressSignup={handleToggleSignupModal}
+                closeSigninModal={handleToggleSigninModal}
+                setShowSucessModal={handleSuccessModal}
+                policyData={policyData?.data}
+              />
+            </Modal>
+          )}
+          {showSignUpModal && (
+            <Modal closeAllModal={handleCloseAllModal}>
+              <Signup
+                onPressLogin={handleToggleSigninModal}
+                closeSignupModal={handleToggleSignupModal}
+                setShowSucessModal={handleSuccessModal}
+              />
+            </Modal>
+          )}
+          {showFullPreview && (
+            <Modal closeAllModal={handleCloseAllModal}>
+              <PreviewModal
+                content={policyData?.data?.description}
+                comments={policyData?.data?.comments}
+                playAudioButtonPressed={playButtonPressed}
+                handleSetPlayAudioButton={handleSetPlayAudioButton}
+                policyId={policyData?.data?._id}
+                userData={userData}
+                refetchPolicy={refetchPolicy}
+              />
+            </Modal>
+          )}
 
-      {/* citizens rep */}
-      <section className="bg-[#FAFAFA] py-20 w-full">
-        <CitizensResponse data={data} />
-        <CitizenVoices />
-      </section>
-
-      {/* banner */}
-      <div className="bg-primaryColorAccent py-10">
-        <div className="w-[80%] lg:w-full container mx-auto ">
-          <div className="flex flex-row items-center gap-x-2 justify-center">
-            <img
-              src={infoIcon}
-              alt="Citizensrep info icon"
-              className="w-14 h-14 lg:w-8 lg:h-8"
-            />
-            <p className="text-base text-primaryColor text-center ">
-              <span className="font-semibold">DISCLAIMER:</span> The website
-              owners do not endorse any specific views, statements, or content
-              shared by participants on the platform.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* citizens report */}
-      <CitizenReport />
-
-      {showSignInModal && (
-        <Modal closeAllModal={handleCloseAllModal}>
-          <Signin
-            onPressSignup={handleToggleSignupModal}
-            closeSigninModal={handleToggleSigninModal}
-            setShowSucessModal={handleSuccessModal}
-          />
-        </Modal>
-      )}
-      {showSignUpModal && (
-        <Modal closeAllModal={handleCloseAllModal}>
-          <Signup
-            onPressLogin={handleToggleSigninModal}
-            closeSignupModal={handleToggleSignupModal}
-            setShowSucessModal={handleSuccessModal}
-          />
-        </Modal>
-      )}
-      {showFullPreview && (
-        <Modal closeAllModal={handleCloseAllModal}>
-          <PreviewModal
-            content={content}
-            comments={comments}
-            playAudioButtonPressed={playButtonPressed}
-            handleSetPlayAudioButton={handleSetPlayAudioButton}
-          />
-        </Modal>
-      )}
-
-      {showSucessModal && (
-        <Modal closeAllModal={handleCloseAllModal}>
-          <SuccessAlert message="Log in successful!" />
-        </Modal>
+          {showSucessModal && (
+            <Modal closeAllModal={handleCloseAllModal}>
+              <SuccessAlert message="Log in successful!" />
+            </Modal>
+          )}
+        </>
       )}
     </>
   );

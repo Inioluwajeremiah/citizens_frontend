@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { activePoliciesData, blogData } from "../../utils/data";
 import ForwardArrow from "../../assets/icons/ForwardArrow";
+import { useGetGeneralStatsQuery } from "../../redux/apiSlice/generalStatsApiSlice";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const Home = () => {
   const headerData = [
@@ -23,6 +25,8 @@ const Home = () => {
       borderColor: "#A9D2CF",
     },
   ];
+  const { data: generalStatsData, isLoading: loadingGeneralStats } =
+    useGetGeneralStatsQuery();
 
   return (
     <div className="">
@@ -39,39 +43,49 @@ const Home = () => {
       </header>
 
       {/* header 2 */}
-      <div className="w-full grid grid-cols-3 gap-x-4 px-10 mt-10 border-b pb-10">
-        {headerData.map((item, index) => (
-          <div
-            key={index}
-            className={`p-4 rounded-md  ${
-              index !== 0
-                ? "border border-[#A9D2CF] bg-[#F2F8F6]"
-                : "bg-[#226C67] border border-[#226C67]"
-            }`}
-          >
-            <p
-              className={`text-base font-medium text-center ${
-                index !== 0 ? "text-blackColor" : "text-white"
+      {loadingGeneralStats ? (
+        <LoadingSpinner />
+      ) : (
+        <div className="w-full grid grid-cols-3 gap-x-4 px-10 mt-10 border-b pb-10">
+          {headerData.map((item, index) => (
+            <div
+              key={index}
+              className={`p-4 rounded-md  ${
+                index !== 0
+                  ? "border border-[#A9D2CF] bg-[#F2F8F6]"
+                  : "bg-[#226C67] border border-[#226C67]"
               }`}
             >
-              {item.title}
-            </p>
-            <p
-              className={`text-[40px] text-center mt-2 ${
-                index !== 0 ? "text-[#0A6A69]" : "text-white"
-              }`}
-            >
-              {item.stat}
-            </p>
-          </div>
-        ))}
-      </div>
+              <p
+                className={`text-base font-medium text-center ${
+                  index !== 0 ? "text-blackColor" : "text-white"
+                }`}
+              >
+                {item.title}
+              </p>
+              <p
+                className={`text-[40px] text-center mt-2 ${
+                  index !== 0 ? "text-[#0A6A69]" : "text-white"
+                }`}
+              >
+                {item.title === "Policies"
+                  ? generalStatsData?.data.policies
+                  : item.title === "Blog Posts"
+                  ? generalStatsData?.data.blogs
+                  : item.title === "Users"
+                  ? generalStatsData?.data.users
+                  : ""}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* policy section */}
       <div className=" px-10 mt-10">
         {/* header */}
         <div className="flex flex-row justify-between">
-          <h1 className="text-2xl text-blackColor">Hello Admin</h1>
+          <h1 className="text-2xl text-blackColor">Policies</h1>
           <Link to={"/admin/policies"}>
             <p>See All</p>
           </Link>

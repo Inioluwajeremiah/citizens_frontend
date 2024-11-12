@@ -2,6 +2,7 @@ import starIcon from "../../assets/icons/star.svg";
 import forwardArrowIcon2 from "../../assets/icons/forwardArrow2.svg";
 import forwardArrowIcon from "../../assets/icons/forwardArrow.svg";
 import pastprojectsImage from "../../assets/images/pastprojects.png";
+import { Link } from "react-router-dom";
 
 const PastProjects = () => {
   return (
@@ -33,7 +34,10 @@ const PastProjects = () => {
           </p>
 
           {/* see all small screen */}
-          <button className="flex flow-row items-center lg:hidden mt-10 ">
+          <Link
+            to={"/policies"}
+            className="flex flow-row items-center lg:hidden mt-10 "
+          >
             <p className="text-[#FB7F57] font-semibold text-sm">
               See All Projects
             </p>
@@ -42,7 +46,7 @@ const PastProjects = () => {
               alt="Citizens learn more forward arrow attached to Citizens learn more button"
               className="ml-2"
             />
-          </button>
+          </Link>
 
           <div className="w-[80%] lg:w-full flex flex-row items-center gap-x-4 mt-10">
             <div className="bg-primaryColorTint w-1/2 flex flex-col items-center justify-center px-10 py-10">
@@ -80,14 +84,17 @@ const PastProjects = () => {
         {/* right ddiv */}
         <div className="">
           {/* see all large screen */}
-          <button className="hidden lg:flex flow-row items-center  float-end ">
+          <Link
+            to={"/policies"}
+            className="hidden lg:flex flow-row items-center  float-end "
+          >
             <p className="text-primaryColor font-semibold text-lg">See All</p>
             <img
               src={forwardArrowIcon}
               alt="Citizens learn more forward arrow attached to Citizens learn more button"
               className="ml-2"
             />
-          </button>
+          </Link>
 
           <div className="bg-primaryColorTint p-4 mt-10">
             <img

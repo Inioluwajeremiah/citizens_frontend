@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import HamburgerMenuIcon from "../../assets/icons/MenuIcon";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/icons/logo.svg";
 
 const Header = () => {
@@ -26,7 +26,7 @@ const Header = () => {
     },
     {
       title: "Contact US",
-      route: "#contact",
+      route: "contact",
       linkid: "contact",
     },
   ];
@@ -110,9 +110,9 @@ const Header = () => {
             </NavLink>
           ))}
 
-          <button className="bg-primaryColor h-16 px-10">
+          <Link to={"policies"} className="bg-primaryColor h-16 px-10">
             <p className="text-white text-base font-semibold">Donate</p>
-          </button>
+          </Link>
         </nav>
         <button className=" lg:hidden" onClick={handleToggleMenu}>
           <HamburgerMenuIcon />
