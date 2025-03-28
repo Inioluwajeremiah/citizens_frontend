@@ -2,11 +2,12 @@ import chevronDownIcon from "../assets/icons/ChevronDown.svg";
 import searchIcon from "../assets/icons/searchicon.svg";
 import { Link } from "react-router-dom";
 import { activePoliciesData } from "../utils/data";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Policies = () => {
   const [page, setPage] = useState(1);
   console.log("handleScroll page ==> ", page);
+  const policieesSection = useRef<HTMLDivElement | null>(null);
 
   const windowHeight = window.innerHeight;
   const scrollTop = document.documentElement.scrollTop;
@@ -18,12 +19,20 @@ const Policies = () => {
   };
 
   useEffect(() => {
+    policieesSection.current?.scrollIntoView({ behavior: "smooth" });
+  });
+
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.addEventListener("scroll", handleScroll);
   });
 
   return (
-    <section className="w-full py-20 mt-20">
+    <section
+      ref={policieesSection}
+      id="policiesSection"
+      className="w-full py-20 mt-20"
+    >
       <div className="container mx-auto w-[80%] lg:w-full  ">
         <div className="w-full flex flex-col lg:flex-row items-center justify-center lg:justify-between">
           {/* active policy  */}

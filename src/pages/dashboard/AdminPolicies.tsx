@@ -3,7 +3,7 @@ import chevronDownIcon from "../../assets/icons/ChevronDown.svg";
 import searchIcon from "../../assets/icons/searchicon.svg";
 // import health from "../../assets/images/health.png";
 // import economy from "../../assets/images/economy.png";
-// import education from "../../assets/images/education.png";
+import education from "../../assets/images/education.png";
 import OptionsIcons from "../../assets/icons/OptionsIcons";
 import { Link } from "react-router-dom";
 import { decryptWithRSA } from "../../utils/subtlecrypto";

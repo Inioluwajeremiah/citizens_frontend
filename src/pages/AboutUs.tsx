@@ -1,10 +1,16 @@
+import { useEffect } from "react";
+
 const AboutUs = () => {
+  useEffect(() => {
+    window.scrollTo(0, 20);
+  }, []);
   // const purpose =
   //   "Youth Track it is an accountability platform established by the Democracy Convening Alliance. It serves as an online scorecard, amplifying the voices of young people and marginalized communities in Nigeria. This tool tracks progress on the demands outlined in the Youth Democracy Charter of Demand and provides vital data to guide advocacy efforts and influence policy formulation, implementation, and reform where needed.";
 
   return (
     <>
       <section
+        id="aboutUS"
         className="w-full mt-20 h-[467px] relative  bg-no-repeat bg-cover bg-center"
         style={{
           backgroundImage: `url('/src/assets/images/herobg.png')`,

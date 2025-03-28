@@ -12,12 +12,12 @@ const Header = () => {
     {
       title: "About US",
       route: "about",
-      linkid: "about",
+      linkid: "aboutUs",
     },
     {
       title: "Policies",
       route: "policies",
-      linkid: "policies",
+      linkid: "policiesSection",
     },
     {
       title: "Blog",

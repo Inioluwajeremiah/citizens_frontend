@@ -32,6 +32,11 @@ const HeroSection: React.FC = () => {
   console.log(imgHeight);
 
   const windowidth = window.innerWidth;
+  const heresectionRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    heresectionRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   useEffect(() => {
     if (imageRef.current) {
@@ -39,8 +44,12 @@ const HeroSection: React.FC = () => {
     }
   }, [imageRef, window.innerWidth]);
   return (
-    <section className="w-full h-fit lg:h-screen  mt-20 relative">
+    <section
+      ref={heresectionRef}
+      className="w-full h-fit lg:h-screen  mt-20 relative"
+    >
       <div
+        id="herosection"
         // className="absolute top-0 inset-0 bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,0.8)] z-10"
         className="absolute top-0 inset-0 bg-[#055D57A8] z-10"
         style={{

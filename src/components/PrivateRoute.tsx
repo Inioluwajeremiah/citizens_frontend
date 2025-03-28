@@ -22,7 +22,7 @@ const PrivateRoute = () => {
           ? decryptedText
           : JSON.parse(decryptedText || "");
       // userData?._id ? <Outlet /> : <Navigate to="/" replace />;Z
-      console.log("private riute decryptedText parsed data ===> ", parsedData);
+      console.log("private route decryptedText parsed data ===> ", parsedData);
       setUserData(parsedData);
       return userData?._id ? <Outlet /> : <Navigate to="/" replace />;
     } catch (error) {

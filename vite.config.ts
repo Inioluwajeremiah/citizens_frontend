@@ -9,5 +9,4 @@ export default defineConfig({
       "/uploads": "https://citizens-backend-lzzl.onrender.com",
     },
   },
-  base: "/",
 });

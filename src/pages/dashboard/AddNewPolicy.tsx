@@ -34,6 +34,7 @@ const AddNewPolicy = () => {
 
     setImageUrl(imageurl);
   };
+
   const handleSubmit = async () => {
     try {
       if (!title) {

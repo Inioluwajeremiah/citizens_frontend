@@ -243,7 +243,7 @@ const PolicyPreview = () => {
   });
 
   return (
-    <>
+    <div className="mt-28">
       {loadingPolicyData ? (
         <LoadingSpinner />
       ) : (
@@ -436,7 +436,7 @@ const PolicyPreview = () => {
           )}
         </>
       )}
-    </>
+    </div>
   );
 };
 
