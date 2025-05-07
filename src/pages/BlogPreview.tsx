@@ -419,7 +419,7 @@ const BlogPreview = () => {
             <Modal closeAllModal={handleCloseAllModal}>
               <PreviewModal
                 content={policyData?.data?.description}
-                comments={policyData?.data?.comments}
+                // comments={policyData?.data?.comments}
                 playAudioButtonPressed={playButtonPressed}
                 handleSetPlayAudioButton={handleSetPlayAudioButton}
                 policyId={policyData?.data?._id}
