@@ -1,39 +1,40 @@
 import { useEffect, useState } from "react";
 import HamburgerMenuIcon from "../../assets/icons/MenuIcon";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/icons/logo.svg";
 
 const Header = () => {
+  const location = useLocation();
   const [toggleMenu, setToggleMenu] = useState(false);
   const [toggleTheme, setToggleTheme] = useState(false);
-  const [activeLink, setActiveLink] = useState("");
+  const [pathname, setPathname] = useState<string>("");
 
   const navItemsData = [
     {
       title: "About US",
-      route: "about",
+      route: "/about",
       linkid: "aboutUs",
     },
     {
       title: "Policies",
-      route: "policies",
+      route: "/policies",
       linkid: "policiesSection",
     },
     {
       title: "Blog",
-      route: "blog",
+      route: "/blog",
       linkid: "blog",
     },
     {
       title: "Contact US",
-      route: "contact",
+      route: "/contact",
       linkid: "contact",
     },
   ];
 
   const handleLink = (linkId: string) => {
     setToggleMenu(false);
-    setActiveLink(linkId);
+
     document.getElementById(linkId)?.scrollIntoView({ behavior: "smooth" });
   };
 
@@ -44,6 +45,10 @@ const Header = () => {
   // const handleToggleTheme = () => {
   //   setToggleTheme(!toggleTheme);
   // };
+
+  useEffect(() => {
+    setPathname(location.pathname);
+  }, [location]);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -86,7 +91,7 @@ const Header = () => {
         <nav
           className={` fixed lg:relative flex flex-col lg:flex-row items-center lg:h-full lg:top-0 lg:-left-0 lg:w-fit ${
             toggleMenu
-              ? " left-0 top-20 h-screen justify-center bg-white w-full "
+              ? " left-0 top-20 h-screen  justify-center bg-white w-full "
               : "-left-full"
           }`}
         >
@@ -94,14 +99,16 @@ const Header = () => {
             <NavLink
               key={index}
               className={({ isActive }) =>
-                `ml-4 text-blackColor text-base font-semibold ${isActive}  ? "" :""`
+                `ml-4   ${
+                  pathname === item.route
+                    ? "text-primaryColor"
+                    : "text-blackColor"
+                } text-base font-semibold ${isActive}  ? "" :""`
               }
               to={item.route}
               style={{
-                borderBottomColor: "#131313",
-                borderBottomWidth: 4,
-                borderBottom: activeLink === item.linkid ? "solid" : "",
                 marginRight: 20,
+
                 marginBottom: toggleMenu ? 40 : "",
               }}
               onClick={() => handleLink(item.linkid)}
@@ -112,7 +119,7 @@ const Header = () => {
 
           <Link
             to={"policies"}
-            className="bg-primaryColor h-16 px-10 flex flex-col items-center justify-center"
+            className="bg-primaryColor h-14 px-10 flex flex-col items-center justify-center"
           >
             <p className="text-white text-base font-semibold">Donate</p>
           </Link>

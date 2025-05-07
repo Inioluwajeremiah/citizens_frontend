@@ -5,6 +5,7 @@ interface UserData {
   username: string;
   email: string;
   password: string;
+  role?: string;
 }
 interface LoginResponse {
   success: string;
@@ -60,6 +61,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     getUser: builder.query<User, void>({
       query: () => ({
         url: `${USERS_URL}`,
+        method: "GET",
       }),
       providesTags: ["User"],
       keepUnusedDataFor: 10800,

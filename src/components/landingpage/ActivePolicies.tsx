@@ -5,7 +5,10 @@ import searchIcon from "../../assets/icons/searchicon.svg";
 // import education from "../../assets/images/education.png";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { useGetPoliciesQuery } from "../../redux/apiSlice/policyApiSlice";
+import {
+  useGetActivePoliciesQuery,
+  useGetPoliciesQuery,
+} from "../../redux/apiSlice/policyApiSlice";
 import LoadingSpinner from "../LoadingSpinner";
 import { endpoints } from "../../utils/endpoints";
 // import endpoint from '../../utils/endpoints'
@@ -445,7 +448,7 @@ const ActivePolicies = () => {
   ];
 
   const { data: policiesData, isLoading: loadingPolicies } =
-    useGetPoliciesQuery({
+    useGetActivePoliciesQuery({
       page: 1,
       limit: 4,
       search: searchTerm,
@@ -567,7 +570,7 @@ const ActivePolicies = () => {
                 style={{
                   backgroundImage:
                     (item.imageUrl &&
-                      `url(${endpoints.proxyUrl + item.imageUrl})`) ||
+                      `url(${endpoints.imageBaseUrl + item.imageUrl})`) ||
                     "",
                   backgroundSize: "cover",
                   backgroundPosition: "center",

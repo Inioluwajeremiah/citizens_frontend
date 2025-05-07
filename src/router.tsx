@@ -17,6 +17,9 @@ import PolicyRoute from "./components/dashboard/PolicyRoute";
 import Home from "./pages/dashboard/Home";
 import AddNewBlog from "./pages/dashboard/AddNewBlog";
 import ContactUs from "./pages/ContactUs";
+import BlogRoute from "./components/dashboard/BlogRoute";
+import AdminSignin from "./components/auth/AdminSignin";
+import AdminSignup from "./components/auth/AdminSignUp";
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +51,14 @@ export const router = createBrowserRouter([
       {
         path: "/contact",
         element: <ContactUs />,
+      },
+      {
+        path: "/admin/signin",
+        element: <AdminSignin />,
+      },
+      {
+        path: "/admin/signup",
+        element: <AdminSignup />,
       },
       {
         path: "",
@@ -90,7 +101,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "blogs",
-            element: <AdminRoute />,
+            element: <BlogRoute />,
             children: [
               {
                 path: "",

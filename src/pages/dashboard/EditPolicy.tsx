@@ -8,47 +8,23 @@ import UploadImageModal from "./UploadImageModal";
 import imageicon from "../../assets/icons/image.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useNavigate } from "react-router-dom";
 // import { decryptWithRSA } from "../../utils/subtlecrypto";
 // import { UserDataProps } from "../../components/interfaces/UserInterface";
 
-const AddNewPolicy = () => {
+const EditPolicy = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
-  const navigate = useNavigate();
   const userData = userInfo ? JSON.parse(userInfo) : "";
   // const [userData, setUserData] = useState<UserDataProps>({});
   const [errorIndex, setErrorIndex] = useState(0);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  // const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [associatedPolicy, setAssociatePolicy] = useState("");
   const [demand, setDemand] = useState("");
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [showUploadImageModal, setShowUploadImageModal] = useState(false);
   const [showSucessModal, setShowSucessModal] = useState(false);
-
-  // const decryptData = async () => {
-  //   try {
-  //     const decryptedText = await decryptWithRSA(
-  //       import.meta.env.VITE_PRIVATE_KEY,
-  //       userInfo
-  //     );
-  //     const parsedData =
-  //       typeof decryptedText === "object"
-  //         ? decryptedText
-  //         : JSON.parse(decryptedText || "");
-  //     setUserData(parsedData);
-  //   } catch (error) {
-  //     console.error("Failed to parse decrypted text:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   decryptData();
-  // }, [userInfo]);
-
-  console.log("user data id at add new policy===> ", userData && userData._id);
 
   const [createPolicy, { isLoading }] = useCreatePolicyMutation();
 
@@ -72,7 +48,7 @@ const AddNewPolicy = () => {
         setErrorIndex(4);
       } else {
         const res = await createPolicy({
-          userId: userData?._id || "672b9a01077c8fb0368aff11",
+          userId: userData?._id || "",
           title: title,
           demand: demand,
           associatedPolicy: associatedPolicy,
@@ -104,20 +80,33 @@ const AddNewPolicy = () => {
     setShowUploadImageModal(!showUploadImageModal);
   };
 
-  // if (isLoadingUserData) {
-  //   return <div>Loading...</div>; // Render a loading indicator
-  // }
+  // const decryptData = async () => {
+  //   const decryptedText = await decryptWithRSA(
+  //     import.meta.env.VITE_PRIVATE_KEY,
+  //     userInfo
+  //   );
+  //   try {
+  //     const parsedData =
+  //       typeof decryptedText === "object"
+  //         ? decryptedText
+  //         : JSON.parse(decryptedText || "");
+  //     setUserData(parsedData);
+  //   } catch (error) {
+  //     console.error("Failed to parse decrypted text:", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   decryptData();
+  // }, [userInfo]);
 
   return (
     <div className="py-10">
       {/* header 1 */}
-      <header className="h-14 border-b mx-10 flex flex-row justify-between">
+      <header className="h-14 border-b mx-10">
         <h1 className="text-2xl text-blackColor  font-semibold ">
           Hello Admin
         </h1>
-        <button onClick={() => navigate(-1)}>
-          <p>Back</p>
-        </button>
       </header>
 
       {/* header 2 */}
@@ -159,17 +148,17 @@ const AddNewPolicy = () => {
           <option value="education" className="py-1 text-sm">
             Education
           </option>
-          <option value="healthcare" className="py-1 text-sm">
-            Healthcare
+          <option value="category1" className="py-1 text-sm">
+            category1
           </option>
-          <option value="environment" className="py-1 text-sm">
-            Environment
+          <option value="category1" className="py-1 text-sm">
+            category1
           </option>
-          <option value="finance" className="py-1 text-sm">
-            Finance
+          <option value="category1" className="py-1 text-sm">
+            category1
           </option>
-          <option value="technology" className="py-1 text-sm">
-            Technology
+          <option value="category1" className="py-1 text-sm">
+            category1
           </option>
         </select>
         {/* 3. description */}
@@ -179,7 +168,7 @@ const AddNewPolicy = () => {
         <input
           type="text"
           name="demand"
-          value={demand}
+          value={title}
           id="demand"
           placeholder="Demand"
           className={`mt-2 mb-6 border w-full p-4 outline-none focus:border-primaryColor text-sm bg-[#FCFCFD] ${
@@ -193,7 +182,7 @@ const AddNewPolicy = () => {
         <input
           type="text"
           name="associatePolicy"
-          value={associatedPolicy}
+          value={title}
           id="associatePolicy"
           placeholder="Policy"
           className={`mt-2 mb-6 border w-full p-4 outline-none focus:border-primaryColor text-sm bg-[#FCFCFD] ${
@@ -313,7 +302,7 @@ const AddNewPolicy = () => {
         {/* submit button */}
         <button
           disabled={validData ? false : true}
-          className={`flex mx-auto w-full md:w-[50%] px-10 py-4 mt-10  " ${
+          className={`flex mx-auto w-[40%] px-10 py-4 mt-10  " ${
             validData ? "bg-primaryColor" : "bg-[#0A6A69A3]"
           }`}
           onClick={handleSubmit}
@@ -324,13 +313,13 @@ const AddNewPolicy = () => {
         </button>
       </div>
 
-      {/* success alert modal
+      {/* success alert modal */}
       {showSuccessDialog && (
         <Modal
           children={<SuccessAlert message="Policy added successfully" />}
           closeAllModal={() => setShowSuccessDialog(false)}
         />
-      )} */}
+      )}
 
       {/* show upload image  */}
       {showUploadImageModal && (
@@ -342,7 +331,7 @@ const AddNewPolicy = () => {
       {/* success alert modal */}
       {showSucessModal && (
         <Modal
-          closeAllModal={() => setShowSucessModal(false)}
+          closeAllModal={() => setShowSuccessDialog(false)}
           closeModal={showSucessModal}
         >
           <SuccessAlert message="Policy created successfully!" />
@@ -352,4 +341,4 @@ const AddNewPolicy = () => {
   );
 };
 
-export default AddNewPolicy;
+export default EditPolicy;

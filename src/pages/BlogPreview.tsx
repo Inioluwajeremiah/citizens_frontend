@@ -92,7 +92,7 @@ import { endpoints } from "../utils/endpoints";
 //   },
 // ];
 
-const PolicyPreview = () => {
+const BlogPreview = () => {
   const data = [
     { name: "Group A", value: 400 },
     { name: "Group B", value: 300 },
@@ -118,8 +118,10 @@ const PolicyPreview = () => {
     isLoading: loadingPolicyData,
     refetch: refetchPolicy,
   } = useGetPolicyQuery({
-    id: state?._id,
+    id: state._id,
   });
+
+  console.log("policy data from policy preview screen ====>", policyData);
 
   // const policyDescription = state?.description.replace(/<\/?[^>]+(>|$)/g);
 
@@ -129,38 +131,38 @@ const PolicyPreview = () => {
   // console.log("policy comments at preview policy ===> ", state?.comments);
   // console.log("passed state at preview policy ===> ", state);
 
-  // const decryptData = async () => {
-  //   const decryptedText = await decryptWithRSA(
-  //     import.meta.env.VITE_PRIVATE_KEY,
-  //     userInfo
-  //   );
-  //   console.log("decryptedText ===> ", decryptedText);
-  //   try {
-  //     const parsedData =
-  //       typeof decryptedText === "object"
-  //         ? decryptedText
-  //         : JSON.parse(decryptedText || "");
-  //     setUserData(parsedData);
-  //   } catch (error) {
-  //     console.error("Failed to parse decrypted text:", error);
-  //   }
-  // };
+  const decryptData = async () => {
+    const decryptedText = await decryptWithRSA(
+      import.meta.env.VITE_PRIVATE_KEY,
+      userInfo
+    );
+    console.log("decryptedText ===> ", decryptedText);
+    try {
+      const parsedData =
+        typeof decryptedText === "object"
+          ? decryptedText
+          : JSON.parse(decryptedText || "");
+      setUserData(parsedData);
+    } catch (error) {
+      console.error("Failed to parse decrypted text:", error);
+    }
+  };
 
   // update policy views
 
   useEffect(() => {
     const handleUpdatePolicyView = async () => {
-      console.log("policy id ==> ", state?._id);
+      console.log("policy id ==> ", state._id);
 
-      const res = await updatePolicyViews({ policyId: state?._id });
+      const res = await updatePolicyViews({ policyId: state._id });
       console.log("updatePolicyView res ===> ", res);
     };
     handleUpdatePolicyView();
   }, [state]);
 
-  // useEffect(() => {
-  //   decryptData();
-  // }, [userInfo]);
+  useEffect(() => {
+    decryptData();
+  }, [userInfo]);
 
   // const handleToggleModal = () => {
   //   setShowModal(!showModal);
@@ -241,20 +243,18 @@ const PolicyPreview = () => {
   });
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center mt-20">
+    <div className="mt-28">
       {loadingPolicyData ? (
         <LoadingSpinner />
       ) : (
         <>
           <section
-            className="w-full h-[500px] relative  bg-no-repeat bg-cover bg-center"
+            className="w-full mt-20 h-[467px] relative  bg-no-repeat bg-cover bg-center"
             style={{
-              backgroundImage: `url('${
-                endpoints.imageBaseUrl + state?.imageUrl
-              }')`,
+              backgroundImage: `url('${endpoints.proxyUrl + state.imageUrl}')`,
             }}
           >
-            <div className="absolute h-[500px]  top-0 inset-0 bg-gradient-to-b from-[rgba(11,29,43,0)] to-[rgba(11,29,43,1)] z-10">
+            <div className="absolute h-[467px]  top-0 inset-0 bg-gradient-to-b from-[rgba(11,29,43,0)] to-[rgba(11,29,43,1)] z-10">
               <div className=" w-[80%] lg:w-full container mx-auto h-full  flex flex-col justify-center  ">
                 <p className="text-[40px] text-white leading-[70px] w-[50%] md:w-[40%] lg:w-[25%] font-medium tracking-[-1.6px]">
                   {/* {     Sexual Reproductive health and right} */}
@@ -281,7 +281,7 @@ const PolicyPreview = () => {
                     <Link
                       to="/add-your-voice"
                       state={{
-                        policyData: policyData?.data,
+                        policyData: policyData.data,
                         userData: userData,
                       }}
                       className="hidden md:flex flow-row items-center gap-x-2 bg-primaryColor px-8 py-4"
@@ -309,8 +309,9 @@ const PolicyPreview = () => {
               </div>
             </div>
           </section>
+
           {/* introduction */}
-          <section className="w-full py-20 bg-primaryColorAccent">
+          <section className=" py-20 bg-primaryColorAccent">
             <div className="container w-[80%] lg:w-full mx-auto">
               <p className="text-center text-blackColor text-[32px] tracking-tighter font-medium">
                 Introduction
@@ -365,14 +366,17 @@ const PolicyPreview = () => {
               )}
             </div>
           </section>
+
           {loadingViews && <LoadingSpinner />}
+
           {/* citizens rep */}
           <section className="bg-[#FAFAFA] py-20 w-full">
             <CitizensResponse data={data} />
             <CitizenVoices />
           </section>
+
           {/* banner */}
-          <div className="w-full bg-primaryColorAccent py-10">
+          <div className="bg-primaryColorAccent py-10">
             <div className="w-[80%] lg:w-full container mx-auto ">
               <div className="flex flex-row items-center gap-x-2 justify-center">
                 <img
@@ -388,8 +392,10 @@ const PolicyPreview = () => {
               </div>
             </div>
           </div>
+
           {/* citizens report */}
           <CitizenReport />
+
           {showSignInModal && (
             <Modal closeAllModal={handleCloseAllModal}>
               <Signin
@@ -413,7 +419,7 @@ const PolicyPreview = () => {
             <Modal closeAllModal={handleCloseAllModal}>
               <PreviewModal
                 content={policyData?.data?.description}
-                // comments={policyData?.data?.comments} // remove comments to the preview
+                comments={policyData?.data?.comments}
                 playAudioButtonPressed={playButtonPressed}
                 handleSetPlayAudioButton={handleSetPlayAudioButton}
                 policyId={policyData?.data?._id}
@@ -434,4 +440,4 @@ const PolicyPreview = () => {
   );
 };
 
-export default PolicyPreview;
+export default BlogPreview;

@@ -1,65 +1,38 @@
-// import { Editor } from "@tinymce/tinymce-react";
+import { Editor } from "@tinymce/tinymce-react";
 
 import { useState } from "react";
 import Modal from "../../components/Modal";
 import SuccessAlert from "../../components/SuccessAlert";
-import { useCreatePolicyMutation } from "../../redux/apiSlice/policyApiSlice";
+import { useCreateBlogMutation } from "../../redux/apiSlice/blogApiSlice";
 import UploadImageModal from "./UploadImageModal";
 import imageicon from "../../assets/icons/image.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useNavigate } from "react-router-dom";
 // import { decryptWithRSA } from "../../utils/subtlecrypto";
 // import { UserDataProps } from "../../components/interfaces/UserInterface";
 
-const AddNewPolicy = () => {
+const EditBlog = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
-  const navigate = useNavigate();
   const userData = userInfo ? JSON.parse(userInfo) : "";
   // const [userData, setUserData] = useState<UserDataProps>({});
   const [errorIndex, setErrorIndex] = useState(0);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  // const [showSuccessDialog, setShowSuccessDialog] = useState(false);
-  const [associatedPolicy, setAssociatePolicy] = useState("");
-  const [demand, setDemand] = useState("");
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [showUploadImageModal, setShowUploadImageModal] = useState(false);
   const [showSucessModal, setShowSucessModal] = useState(false);
 
-  // const decryptData = async () => {
-  //   try {
-  //     const decryptedText = await decryptWithRSA(
-  //       import.meta.env.VITE_PRIVATE_KEY,
-  //       userInfo
-  //     );
-  //     const parsedData =
-  //       typeof decryptedText === "object"
-  //         ? decryptedText
-  //         : JSON.parse(decryptedText || "");
-  //     setUserData(parsedData);
-  //   } catch (error) {
-  //     console.error("Failed to parse decrypted text:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   decryptData();
-  // }, [userInfo]);
-
-  console.log("user data id at add new policy===> ", userData && userData._id);
-
-  const [createPolicy, { isLoading }] = useCreatePolicyMutation();
+  const [createBlog, { isLoading }] = useCreateBlogMutation();
 
   const validData = title && category && description && imageUrl;
 
   const getImageUrl = (imageurl: string) => {
-    console.log("policy image url ===> ", imageurl);
+    console.log("blog image url ===> ", imageurl);
 
     setImageUrl(imageurl);
   };
-
   const handleSubmit = async () => {
     try {
       if (!title) {
@@ -71,11 +44,9 @@ const AddNewPolicy = () => {
       } else if (!description) {
         setErrorIndex(4);
       } else {
-        const res = await createPolicy({
-          userId: userData?._id || "672b9a01077c8fb0368aff11",
+        const res = await createBlog({
+          userId: userData?._id || "",
           title: title,
-          demand: demand,
-          associatedPolicy: associatedPolicy,
           category: category,
           description: description,
           imageUrl: imageUrl,
@@ -84,8 +55,6 @@ const AddNewPolicy = () => {
           setShowSucessModal(true);
           setTitle("");
           setCategory("");
-          setDemand("");
-          setAssociatePolicy("");
           setImageUrl("");
           setDescription("");
           setTimeout(() => {
@@ -104,31 +73,43 @@ const AddNewPolicy = () => {
     setShowUploadImageModal(!showUploadImageModal);
   };
 
-  // if (isLoadingUserData) {
-  //   return <div>Loading...</div>; // Render a loading indicator
-  // }
+  // const decryptData = async () => {
+  //   const decryptedText = await decryptWithRSA(
+  //     import.meta.env.VITE_PRIVATE_KEY,
+  //     userInfo
+  //   );
+  //   try {
+  //     const parsedData =
+  //       typeof decryptedText === "object"
+  //         ? decryptedText
+  //         : JSON.parse(decryptedText || "");
+  //     setUserData(parsedData);
+  //   } catch (error) {
+  //     console.error("Failed to parse decrypted text:", error);
+  //   }
+  // };
 
+  // useEffect(() => {
+  //   decryptData();
+  // }, [userInfo]);
   return (
     <div className="py-10">
       {/* header 1 */}
-      <header className="h-14 border-b mx-10 flex flex-row justify-between">
-        <h1 className="text-2xl text-blackColor  font-semibold ">
-          Hello Admin
+      <header className="h-14 border-b mx-10">
+        <h1 className="text-2xl text-blackColor mb-4 font-semibold ">
+          Hello {userData?.username}
         </h1>
-        <button onClick={() => navigate(-1)}>
-          <p>Back</p>
-        </button>
       </header>
 
       {/* header 2 */}
       <div className="border-b pb-4 mt-10  mb-6 mx-10">
         <h2 className="text-xl font-semibold tracking-[-0.4px] leading-7">
-          Create New Policy
+          Create New Blog
         </h2>
-        <p className="text-black text-[13px]">Proposal Template</p>
+        <p className="text-black text-[13px]">Blog Template</p>
       </div>
 
-      {/* create policy form */}
+      {/* create blog form */}
       <div aria-label="form" className="w-[60%] mx-10 mt-10">
         <label htmlFor="username" className="text-sm ">
           1. Title
@@ -153,71 +134,31 @@ const AddNewPolicy = () => {
           }`}
           name="category"
           id="category"
+          value={category}
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value=""></option>
           <option value="education" className="py-1 text-sm">
             Education
           </option>
-          <option value="healthcare" className="py-1 text-sm">
-            Healthcare
+          <option value="category1" className="py-1 text-sm">
+            category1
           </option>
-          <option value="environment" className="py-1 text-sm">
-            Environment
+          <option value="category1" className="py-1 text-sm">
+            category1
           </option>
-          <option value="finance" className="py-1 text-sm">
-            Finance
+          <option value="category1" className="py-1 text-sm">
+            category1
           </option>
-          <option value="technology" className="py-1 text-sm">
-            Technology
+          <option value="category1" className="py-1 text-sm">
+            category1
           </option>
         </select>
-        {/* 3. description */}
         <label htmlFor="password" className=" text-sm ">
-          3. Demand
+          3. Description
         </label>
-        <input
-          type="text"
-          name="demand"
-          value={demand}
-          id="demand"
-          placeholder="Demand"
-          className={`mt-2 mb-6 border w-full p-4 outline-none focus:border-primaryColor text-sm bg-[#FCFCFD] ${
-            errorIndex === 2 && "border-red-500"
-          }`}
-          onChange={(e) => setDemand(e.target.value)}
-        />
-        <label htmlFor="password" className=" text-sm ">
-          4. Policy
-        </label>
-        <input
-          type="text"
-          name="associatePolicy"
-          value={associatedPolicy}
-          id="associatePolicy"
-          placeholder="Policy"
-          className={`mt-2 mb-6 border w-full p-4 outline-none focus:border-primaryColor text-sm bg-[#FCFCFD] ${
-            errorIndex === 3 && "border-red-500"
-          }`}
-          onChange={(e) => setAssociatePolicy(e.target.value)}
-        />
-        <label htmlFor="password" className=" text-sm ">
-          5. Description
-        </label>
-        <textarea
-          name="description"
-          value={description}
-          id="description"
-          placeholder="Description"
-          cols={8}
-          rows={5}
-          className={`mt-2 mb-6 border w-full p-4 outline-none focus:border-primaryColor text-sm bg-[#FCFCFD] ${
-            errorIndex === 4 && "border-red-500"
-          }`}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        {/* <p className="mt-2"></p> */}
-        {/* <Editor
+        <p className="mt-2"></p>
+        <Editor
           apiKey="y96gd1h1ls6ru235q03dntkvp2d5vzj0r64jag037t9m4f1e"
           init={{
             plugins: [
@@ -291,9 +232,10 @@ const AddNewPolicy = () => {
             },
           }}
           initialValue=""
+          value={description}
           onEditorChange={(e) => setDescription(e)}
-        /> */}
-        {/* <p className="mt-6"></p> */}
+        />
+        <p className="mt-6"></p>
         <label htmlFor="password" className=" text-sm ">
           3. Add Image
         </label>{" "}
@@ -313,7 +255,7 @@ const AddNewPolicy = () => {
         {/* submit button */}
         <button
           disabled={validData ? false : true}
-          className={`flex mx-auto w-full md:w-[50%] px-10 py-4 mt-10  " ${
+          className={`flex mx-auto w-[40%] px-10 py-4 mt-10  " ${
             validData ? "bg-primaryColor" : "bg-[#0A6A69A3]"
           }`}
           onClick={handleSubmit}
@@ -324,13 +266,13 @@ const AddNewPolicy = () => {
         </button>
       </div>
 
-      {/* success alert modal
+      {/* success alert modal */}
       {showSuccessDialog && (
         <Modal
-          children={<SuccessAlert message="Policy added successfully" />}
+          children={<SuccessAlert message="Blog added successfully" />}
           closeAllModal={() => setShowSuccessDialog(false)}
         />
-      )} */}
+      )}
 
       {/* show upload image  */}
       {showUploadImageModal && (
@@ -342,14 +284,14 @@ const AddNewPolicy = () => {
       {/* success alert modal */}
       {showSucessModal && (
         <Modal
-          closeAllModal={() => setShowSucessModal(false)}
+          closeAllModal={() => setShowSuccessDialog(false)}
           closeModal={showSucessModal}
         >
-          <SuccessAlert message="Policy created successfully!" />
+          <SuccessAlert message="Blog created successfully!" />
         </Modal>
       )}
     </div>
   );
 };
 
-export default AddNewPolicy;
+export default EditBlog;

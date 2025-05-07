@@ -11,7 +11,18 @@ export interface PolicyData {
   endTime?: Date;
 }
 
-export interface Comment {}
+// export interface Comment {}
+
+export interface Comment {
+  userId: string;
+  policyId: string;
+  comment: string;
+  timestamp: string;
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
 
 export interface GetPolicyData {
   _id: string;
@@ -42,9 +53,16 @@ export interface GetPolicyResponse {
   pagination: PaginationInfo;
 }
 
+export interface GetCommentsResponse {
+  success: boolean;
+  data: Comment[];
+  pagination: PaginationInfo;
+}
 export interface PaginationParams {
+  id?: string;
   page: number;
   limit: number;
   search?: string;
   category?: string;
+  createdAt?: string | undefined;
 }

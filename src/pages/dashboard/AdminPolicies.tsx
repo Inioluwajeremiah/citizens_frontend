@@ -10,8 +10,12 @@ import { decryptWithRSA } from "../../utils/subtlecrypto";
 import { RootState } from "../../redux/store";
 import { UserDataProps } from "../../components/interfaces/UserInterface";
 import { useSelector } from "react-redux";
-import { useGetPoliciesQuery } from "../../redux/apiSlice/policyApiSlice";
+import {
+  useDeletePolicyMutation,
+  useGetPoliciesQuery,
+} from "../../redux/apiSlice/policyApiSlice";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import { endpoints } from "../../utils/endpoints";
 
 // const activePoliciesData = [
 //   {
@@ -68,13 +72,27 @@ import LoadingSpinner from "../../components/LoadingSpinner";
 const AdminPolicies = () => {
   const [showOPtionsModal, setShowOPtionsModal] = useState(false);
   const { userInfo } = useSelector((state: RootState) => state.auth);
-  const [userData, setUserData] = useState<UserDataProps>({});
+  const userData = userInfo ? JSON.parse(userInfo) : "";
+  // const [userData, setUserData] = useState<UserDataProps>({});
   const [page, setPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("");
   // const [limit, setLimit] = useState(10);
   const [isOpen, setIsOpen] = useState(false);
+  const [showSucessModal, setShowSucessModal] = useState(false);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const { data: policiesData, isLoading: loadingPolicies } =
+    useGetPoliciesQuery({
+      page,
+      limit: 10,
+      search: searchTerm,
+      category,
+    });
+
+  const [deletePolicy, { isLoading: deletingPolicy }] =
+    useDeletePolicyMutation();
 
   const categories = [
     "Education",
@@ -93,40 +111,45 @@ const AdminPolicies = () => {
     setIsOpen(false); // Close dropdown after selection
   };
 
-  const {
-    data: policiesData,
-
-    isLoading: loadingPolicies,
-  } = useGetPoliciesQuery({
-    page,
-    limit: 10,
-    search: searchTerm,
-    category,
-  });
-
   const handleToggleOptions = () => {
     setShowOPtionsModal(!showOPtionsModal);
   };
 
-  const decryptData = async () => {
-    const decryptedText = await decryptWithRSA(
-      import.meta.env.VITE_PRIVATE_KEY,
-      userInfo
-    );
+  // const decryptData = async () => {
+  //   const decryptedText = await decryptWithRSA(
+  //     import.meta.env.VITE_PRIVATE_KEY,
+  //     userInfo
+  //   );
+  //   try {
+  //     const parsedData =
+  //       typeof decryptedText === "object"
+  //         ? decryptedText
+  //         : JSON.parse(decryptedText || "");
+  //     setUserData(parsedData);
+  //   } catch (error) {
+  //     console.error("Failed to parse decrypted text:", error);
+  //   }
+  // };
+
+  const handleDeletePolicy = async (id: string) => {
     try {
-      const parsedData =
-        typeof decryptedText === "object"
-          ? decryptedText
-          : JSON.parse(decryptedText || "");
-      setUserData(parsedData);
+      const response = await deletePolicy({ id: id });
+
+      if (response.data) {
+        setShowSucessModal(true);
+
+        setTimeout(() => {
+          setShowSucessModal(false);
+        }, 2000);
+      }
     } catch (error) {
-      console.error("Failed to parse decrypted text:", error);
+      console.log();
     }
   };
 
-  useEffect(() => {
-    decryptData();
-  }, [userInfo]);
+  // useEffect(() => {
+  //   decryptData();
+  // }, [userInfo]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -145,6 +168,14 @@ const AdminPolicies = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  if (loadingPolicies) {
+    return (
+      <div className="min-h-screen h-screen flex flex-col justify-center items-center">
+        <LoadingSpinner />
+      </div>
+    );
+  }
 
   return (
     <div className="">
@@ -227,19 +258,18 @@ const AdminPolicies = () => {
         </div>
       </div>
 
-      {loadingPolicies && <LoadingSpinner />}
       {/* policies */}
       <div className=" grid grid-cols-2 gap-10 px-10 mt-10 pb-14">
-        {policiesData?.map((item, index) => (
+        {policiesData?.data?.map((item, index) => (
           <Link
             to={`/policies/${item._id}`}
             state={item}
             key={index}
-            className=" flex flow-row items-start"
+            className=" flex lg:flow-row items-start"
           >
             <div className="w-[40%] bg-gray-400 h-full">
               <img
-                src={item.imageUrl}
+                src={endpoints.imageBaseUrl + item.imageUrl}
                 // src="http://localhost:7000/uploads/image-1731173840648.png"
                 alt={item.title + " image"}
                 className=" rounded-l-md h-full"
@@ -250,17 +280,17 @@ const AdminPolicies = () => {
                 {item.title}
               </p>
               <p className="pr-8 text-sm text-[#383434] mt-2">
-                TAGS:{" "}
+                TAGS:
                 <span className="text-primaryColor font-semibold">
                   {item.category}
                 </span>
               </p>
               <p className="pr-6 text-sm text-[#383434] mt-10">
-                Views:{" "}
+                Views:
                 <span className="text-blackColor font-semibold">555</span>
               </p>
               <p className="pr-6 text-sm text-[#383434] mt-2">
-                Responses:{" "}
+                Responses:
                 <span className="text-blackColor font-semibold">403</span>
               </p>
 

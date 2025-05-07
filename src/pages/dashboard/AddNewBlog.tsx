@@ -13,7 +13,8 @@ import { UserDataProps } from "../../components/interfaces/UserInterface";
 
 const AddNewBlog = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
-  const [userData, setUserData] = useState<UserDataProps>({});
+  const userData = userInfo ? JSON.parse(userInfo) : "";
+  // const [userData, setUserData] = useState<UserDataProps>({});
   const [errorIndex, setErrorIndex] = useState(0);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -72,25 +73,26 @@ const AddNewBlog = () => {
     setShowUploadImageModal(!showUploadImageModal);
   };
 
-  const decryptData = async () => {
-    const decryptedText = await decryptWithRSA(
-      import.meta.env.VITE_PRIVATE_KEY,
-      userInfo
-    );
-    try {
-      const parsedData =
-        typeof decryptedText === "object"
-          ? decryptedText
-          : JSON.parse(decryptedText || "");
-      setUserData(parsedData);
-    } catch (error) {
-      console.error("Failed to parse decrypted text:", error);
-    }
-  };
+  // const decryptData = async () => {
+  //   const decryptedText = await decryptWithRSA(
+  //     import.meta.env.VITE_PRIVATE_KEY,
+  //     userInfo
+  //   );
+  //   try {
+  //     const parsedData =
+  //       typeof decryptedText === "object"
+  //         ? decryptedText
+  //         : JSON.parse(decryptedText || "");
+  //     setUserData(parsedData);
+  //   } catch (error) {
+  //     console.error("Failed to parse decrypted text:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    decryptData();
-  }, [userInfo]);
+  // useEffect(() => {
+  //   decryptData();
+  // }, [userInfo]);
+
   return (
     <div className="py-10">
       {/* header 1 */}

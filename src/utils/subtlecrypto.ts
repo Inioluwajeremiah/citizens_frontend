@@ -246,7 +246,7 @@ export const encryptWithRSA = async (
     // Convert ArrayBuffer to Base64
     const encryptedDataArray = new Uint8Array(encryptedData);
     const base64Token = arrayBufferToBase64(encryptedDataArray);
-    console.log("Encrypted Token (Base64):", base64Token);
+    // console.log("Encrypted Token (Base64):", base64Token);
 
     return base64Token; // Return Base64 encoded token
   } catch (err) {
@@ -313,7 +313,7 @@ export const decryptWithRSA = async (
 
     const dec = new TextDecoder();
     const decryptedText = dec.decode(decryptedData);
-    console.log("Decrypted Text:", decryptedText);
+    // console.log("Decrypted Text:", decryptedText);
     return decryptedText;
   } catch (err) {
     console.error("Decryption failed", err);
@@ -348,8 +348,8 @@ async function runEncryptionDecryption(): Promise<void> {
   const publicKeyPEM = await exportRSAKeyToPEM(publicKey, true);
   const privateKeyPEM = await exportRSAKeyToPEM(privateKey, false);
 
-  console.log("publicKeyPEM ==> ", publicKeyPEM);
-  console.log("privateKeyPEM ===> ", privateKeyPEM);
+  // console.log("publicKeyPEM ==> ", publicKeyPEM);
+  // console.log("privateKeyPEM ===> ", privateKeyPEM);
 
   // Save keys to localStorage
   saveKeysToLocalStorage(publicKeyPEM, privateKeyPEM);
@@ -365,8 +365,8 @@ async function runEncryptionDecryption(): Promise<void> {
       false
     );
 
-    console.log(savedPublicKey);
-    console.log(savedPrivateKey);
+    // console.log(savedPublicKey);
+    // console.log(savedPrivateKey);
 
     encryptedData = await encryptWithRSA(savedPublicKeyPEM, "hello");
 
@@ -389,8 +389,8 @@ async function runEncryptionDecryption(): Promise<void> {
         savedPrivateKeyPEM,
         false
       );
-      console.log(savedPublicKey);
-      console.log(savedPrivateKey);
+      // console.log(savedPublicKey);
+      // console.log(savedPrivateKey);
 
       // Decrypt the message with the private key
       // await decryptWithRSA(savedPrivateKey, encryptedData);

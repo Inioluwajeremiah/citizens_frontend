@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-const PolicyRoute = () => {
+const BlogRoute = () => {
   return (
     <>
       <Outlet />
@@ -8,4 +8,4 @@ const PolicyRoute = () => {
   );
 };
 
-export default PolicyRoute;
+export default BlogRoute;

@@ -84,7 +84,7 @@ const TextReaderWithHighlight: React.FC<TextReaderWithHighlightProps> = ({
   ));
 
   console.log("playAudioButtonPressed ===> ", playAudioButtonPressed);
-  console.log("renderedText ===> ", renderedText);
+  // console.log("renderedText ===> ", renderedText);
 
   useEffect(() => {
     if (playAudioButtonPressed === true) {

@@ -18,6 +18,27 @@ export const blogApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Blog"],
     }),
 
+    getBlogs: builder.query<GetBlogData[], PaginationParams>({
+      query: ({ page, limit, search, category }) => ({
+        url: `${endpoints.blogUrl}`,
+        params: { page, limit, search, category },
+      }),
+      transformResponse: (response: GetBlogResponse): GetBlogData[] => {
+        console.log("response transform ==>", response);
+
+        if (response && response.data) {
+          return response.data.sort(
+            (a, b) =>
+              new Date(b.endTime).getTime() - new Date(a.endTime).getTime()
+          );
+        }
+
+        return [];
+      },
+      providesTags: ["Blog"],
+      keepUnusedDataFor: 10800, // Cache data for 3 hours
+    }),
+
     getActiveBlogs: builder.query<GetBlogData[], PaginationParams>({
       query: ({ page, limit, search, category }) => ({
         url: `${endpoints.blogUrl}/active-blogs`,
@@ -88,6 +109,7 @@ export const blogApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useCreateBlogMutation,
+  useGetBlogsQuery,
   useGetActiveBlogsQuery,
   useGetPastBlogsQuery,
   useGetBlogQuery,

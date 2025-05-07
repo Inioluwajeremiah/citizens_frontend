@@ -1,7 +1,7 @@
 const ContactUs = () => {
   return (
     <section className="relative flex items-center justify-center min-h-screen bg-primaryColorTint p-8">
-      <div className="relative z-10 max-w-lg w-full bg-white rounded-lg shadow-lg p-8">
+      <div className="relative z-10 max-w-lg w-full bg-white rounded-lg shadow-lg p-8 mt-28">
         <h2 className="text-3xl font-semibold text-gray-800 text-center mb-6">
           Contact Us
         </h2>
