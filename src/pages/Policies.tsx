@@ -1,13 +1,13 @@
 import chevronDownIcon from "../assets/icons/ChevronDown.svg";
 import searchIcon from "../assets/icons/searchicon.svg";
 import { Link } from "react-router-dom";
-import { activePoliciesData } from "../utils/data";
+// import { activePoliciesData } from "../utils/data";
 import { useEffect, useRef, useState } from "react";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { useGetPoliciesQuery } from "../redux/apiSlice/policyApiSlice";
 import {
   GetPolicyData,
-  PolicyData,
+  // PolicyData,
 } from "../components/interfaces/PolicyInterface";
 import { endpoints } from "../utils/endpoints";
 
@@ -16,11 +16,11 @@ const Policies = () => {
   const [page, setPage] = useState(1);
   const [items, setItems] = useState<GetPolicyData[]>([]);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [filterMode, setFilterMode] = useState<string>("");
-  const [filterDate, setFilterDate] = useState<Date | null>(null);
+  // const [filterMode, setFilterMode] = useState<string>("");
+  const [filterDate, _] = useState<Date | null>(null);
   const [category, setCategory] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [limit, setLimit] = useState(4);
+  // const [limit, setLimit] = useState(4);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -36,8 +36,8 @@ const Policies = () => {
   const {
     data: policyData,
     isLoading: loadingpolicyData,
-    isError,
-    error,
+    // isError,
+    // error,
   } = useGetPoliciesQuery({
     page: page,
     limit: 2,
@@ -61,11 +61,11 @@ const Policies = () => {
     setLoadingMore(true);
   };
 
-  const handleHideButton = () => {
-    setItems([]);
-    setPage(1);
-    setLoadingMore(true);
-  };
+  // const handleHideButton = () => {
+  //   setItems([]);
+  //   setPage(1);
+  //   setLoadingMore(true);
+  // };
 
   const handleToggleDropdown = () => {
     setIsOpen(!isOpen);

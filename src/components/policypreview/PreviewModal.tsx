@@ -8,7 +8,7 @@ import {
 import { UserDataProps } from "../interfaces/UserInterface";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import avatar from "/avatar.png";
 
 interface PreviewModalProps {
@@ -27,20 +27,20 @@ const PreviewModal: React.FC<PreviewModalProps> = ({
   playAudioButtonPressed,
   handleSetPlayAudioButton,
   policyId,
-  userData,
+  // userData,
 }) => {
   const { userInfo } = useSelector((state: RootState) => state.auth);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [userComment, setUserComent] = useState("");
   const [postComment, { isLoading: postingComment }] = usePostCommentMutation();
   const [errorMessage, setErrorMessage] = useState("");
-  const [showSucessModal, setShowSucessModal] = useState(false);
+  // const [showSucessModal, setShowSucessModal] = useState(false);
 
   const {
     data: comments,
     error,
     refetch,
-    isLoading: fetchingComments,
+    // isLoading: fetchingComments,
   } = useGetCommentsOnPolicyQuery({
     id: policyId,
     page: 1,

@@ -30,7 +30,7 @@ const AdminSignup = () => {
       return { ...prevData, [name]: value };
     });
   };
-  const adminEmails = import.meta.env.VITE_ADMIN_EMAILS;
+  // const adminEmails = import.meta.env.VITE_ADMIN_EMAILS;
 
   const handleSignup = async () => {
     try {

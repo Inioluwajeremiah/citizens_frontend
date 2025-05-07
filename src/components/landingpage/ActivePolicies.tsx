@@ -5,10 +5,7 @@ import searchIcon from "../../assets/icons/searchicon.svg";
 // import education from "../../assets/images/education.png";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  useGetActivePoliciesQuery,
-  useGetPoliciesQuery,
-} from "../../redux/apiSlice/policyApiSlice";
+import { useGetActivePoliciesQuery } from "../../redux/apiSlice/policyApiSlice";
 import LoadingSpinner from "../LoadingSpinner";
 import { endpoints } from "../../utils/endpoints";
 // import endpoint from '../../utils/endpoints'

@@ -80,7 +80,7 @@ const AddYourVoice = () => {
         <Modal closeAllModal={() => setShowFullPreview(false)}>
           <PreviewModal
             content={policyData.description}
-            comments={policyData.comments}
+            // comments={policyData.data?.comments}
             playAudioButtonPressed={false}
             handleSetPlayAudioButton={() => null}
             policyId={policyData?.data?._id}

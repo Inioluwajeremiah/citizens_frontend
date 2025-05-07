@@ -6,8 +6,8 @@ import education from "../../assets/images/education.png";
 import OptionsIcons from "../../assets/icons/OptionsIcons";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+// import { useSelector } from "react-redux";
+// import { RootState } from "../../redux/store";
 
 const activePoliciesData = [
   {
@@ -62,8 +62,8 @@ const activePoliciesData = [
 ];
 
 const AdminBlogs = () => {
-  const { userInfo } = useSelector((state: RootState) => state.auth);
-  const userData = userInfo ? JSON.parse(userInfo) : "";
+  // const { userInfo } = useSelector((state: RootState) => state.auth);
+  // const userData = userInfo ? JSON.parse(userInfo) : "";
   const [showOPtionsModal, setShowOPtionsModal] = useState(false);
 
   const handleToggleOptions = () => {

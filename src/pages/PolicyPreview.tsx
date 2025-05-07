@@ -15,7 +15,7 @@ import SuccessAlert from "../components/SuccessAlert";
 import PreviewModal from "../components/policypreview/PreviewModal";
 import { RootState } from "../redux/store";
 import { UserDataProps } from "../components/interfaces/UserInterface";
-import { decryptWithRSA } from "../utils/subtlecrypto";
+// import { decryptWithRSA } from "../utils/subtlecrypto";
 import {
   useGetPolicyQuery,
   useUpdatePolicyViewsMutation,
@@ -108,7 +108,7 @@ const PolicyPreview = () => {
   const [showSucessModal, setShowSucessModal] = useState(false);
   const [playButtonPressed, setPlayButtonPressed] = useState(false);
   const { userInfo } = useSelector((state: RootState) => state.auth);
-  const [userData, setUserData] = useState<UserDataProps>({});
+  const [userData, _] = useState<UserDataProps>({});
 
   const [updatePolicyViews, { isLoading: loadingViews }] =
     useUpdatePolicyViewsMutation();

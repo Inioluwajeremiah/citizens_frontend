@@ -1,6 +1,6 @@
 import { Editor } from "@tinymce/tinymce-react";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "../../components/Modal";
 import SuccessAlert from "../../components/SuccessAlert";
 import { useCreateBlogMutation } from "../../redux/apiSlice/blogApiSlice";
@@ -8,8 +8,8 @@ import UploadImageModal from "./UploadImageModal";
 import imageicon from "../../assets/icons/image.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { decryptWithRSA } from "../../utils/subtlecrypto";
-import { UserDataProps } from "../../components/interfaces/UserInterface";
+// import { decryptWithRSA } from "../../utils/subtlecrypto";
+// import { UserDataProps } from "../../components/interfaces/UserInterface";
 
 const AddNewBlog = () => {
   const { userInfo } = useSelector((state: RootState) => state.auth);

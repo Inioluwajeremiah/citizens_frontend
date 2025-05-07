@@ -3,15 +3,15 @@ import chevronDownIcon from "../../assets/icons/ChevronDown.svg";
 import searchIcon from "../../assets/icons/searchicon.svg";
 // import health from "../../assets/images/health.png";
 // import economy from "../../assets/images/economy.png";
-import education from "../../assets/images/education.png";
+// import education from "../../assets/images/education.png";
 import OptionsIcons from "../../assets/icons/OptionsIcons";
 import { Link } from "react-router-dom";
-import { decryptWithRSA } from "../../utils/subtlecrypto";
+// import { decryptWithRSA } from "../../utils/subtlecrypto";
 import { RootState } from "../../redux/store";
-import { UserDataProps } from "../../components/interfaces/UserInterface";
+// import { UserDataProps } from "../../components/interfaces/UserInterface";
 import { useSelector } from "react-redux";
 import {
-  useDeletePolicyMutation,
+  // useDeletePolicyMutation,
   useGetPoliciesQuery,
 } from "../../redux/apiSlice/policyApiSlice";
 import LoadingSpinner from "../../components/LoadingSpinner";
@@ -79,7 +79,7 @@ const AdminPolicies = () => {
   const [category, setCategory] = useState("");
   // const [limit, setLimit] = useState(10);
   const [isOpen, setIsOpen] = useState(false);
-  const [showSucessModal, setShowSucessModal] = useState(false);
+  // const [showSucessModal, setShowSucessModal] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -91,8 +91,8 @@ const AdminPolicies = () => {
       category,
     });
 
-  const [deletePolicy, { isLoading: deletingPolicy }] =
-    useDeletePolicyMutation();
+  // const [deletePolicy, { isLoading: deletingPolicy }] =
+  //   useDeletePolicyMutation();
 
   const categories = [
     "Education",
@@ -131,21 +131,21 @@ const AdminPolicies = () => {
   //   }
   // };
 
-  const handleDeletePolicy = async (id: string) => {
-    try {
-      const response = await deletePolicy({ id: id });
+  // const handleDeletePolicy = async (id: string) => {
+  //   try {
+  //     const response = await deletePolicy({ id: id });
 
-      if (response.data) {
-        setShowSucessModal(true);
+  //     if (response.data) {
+  //       setShowSucessModal(true);
 
-        setTimeout(() => {
-          setShowSucessModal(false);
-        }, 2000);
-      }
-    } catch (error) {
-      console.log();
-    }
-  };
+  //       setTimeout(() => {
+  //         setShowSucessModal(false);
+  //       }, 2000);
+  //     }
+  //   } catch (error) {
+  //     console.log();
+  //   }
+  // };
 
   // useEffect(() => {
   //   decryptData();

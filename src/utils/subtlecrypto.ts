@@ -359,11 +359,11 @@ async function runEncryptionDecryption(): Promise<void> {
   let encryptedData;
   if (savedPublicKeyPEM && savedPrivateKeyPEM) {
     // Import keys from PEM format
-    const savedPublicKey = await importRSAKeyFromPEM(savedPublicKeyPEM, true);
-    const savedPrivateKey = await importRSAKeyFromPEM(
-      savedPrivateKeyPEM,
-      false
-    );
+    // const savedPublicKey = await importRSAKeyFromPEM(savedPublicKeyPEM, true);
+    // const savedPrivateKey = await importRSAKeyFromPEM(
+    //   savedPrivateKeyPEM,
+    //   false
+    // );
 
     // console.log(savedPublicKey);
     // console.log(savedPrivateKey);
@@ -384,14 +384,13 @@ async function runEncryptionDecryption(): Promise<void> {
 
     if (savedPublicKeyPEM && savedPrivateKeyPEM) {
       // Import keys from PEM format
-      const savedPublicKey = await importRSAKeyFromPEM(savedPublicKeyPEM, true);
-      const savedPrivateKey = await importRSAKeyFromPEM(
-        savedPrivateKeyPEM,
-        false
-      );
+      // const savedPublicKey = await importRSAKeyFromPEM(savedPublicKeyPEM, true);
+      // const savedPrivateKey = await importRSAKeyFromPEM(
+      //   savedPrivateKeyPEM,
+      //   false
+      // );
       // console.log(savedPublicKey);
       // console.log(savedPrivateKey);
-
       // Decrypt the message with the private key
       // await decryptWithRSA(savedPrivateKey, encryptedData);
     }

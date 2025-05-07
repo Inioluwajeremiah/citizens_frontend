@@ -6,7 +6,7 @@ import { useGetGeneralStatsQuery } from "../../redux/apiSlice/generalStatsApiSli
 // import { useState } from "react";
 import { useGetPoliciesQuery } from "../../redux/apiSlice/policyApiSlice";
 import { useGetBlogsQuery } from "../../redux/apiSlice/blogApiSlice";
-import { blogData } from "../../utils/data";
+// import { blogData } from "../../utils/data";
 import { endpoints } from "../../utils/endpoints";
 const headerData = [
   {
@@ -131,7 +131,7 @@ const Home = () => {
           </Link>
         </div>
 
-        {policiesData?.length === 0 && (
+        {policiesData?.data?.length === 0 && (
           <p className="text-center font-bold text-lg py-4">No policy data</p>
         )}
         {/* policies */}
@@ -162,7 +162,7 @@ const Home = () => {
             </div>
           ) : (
             <div className=" grid grid-cols-1 grid-rows-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-10 pb-10 border-b">
-              {policiesData?.slice(0, 4).map((item, index) => {
+              {policiesData?.data?.slice(0, 4).map((item, index) => {
                 return (
                   <Link
                     to={`/policies/${item._id}`}
